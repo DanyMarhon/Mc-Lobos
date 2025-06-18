@@ -17,5 +17,10 @@ namespace TPInvOp.Web.Controllers
             var categories = _categoryService.GetAll();
             return View(categories);
         }
+        
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
