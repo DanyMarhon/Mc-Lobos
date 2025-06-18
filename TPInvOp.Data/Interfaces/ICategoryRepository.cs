@@ -10,5 +10,6 @@ namespace TPInvOp.Data.Interfaces
         bool Exist(Category category);
         void Edit(Category category);
         void Delete(Category category);
+        void SaveChanges();
     }
 }

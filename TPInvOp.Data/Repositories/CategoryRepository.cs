@@ -14,7 +14,7 @@ namespace TPInvOp.Data.Repositories
 
         public void Add(Category category)
         {
-            throw new NotImplementedException();
+            _dbContext.Categories.Add(category);
         }
 
         public void Delete(Category category)
@@ -29,7 +29,8 @@ namespace TPInvOp.Data.Repositories
 
         public bool Exist(Category category)
         {
-            throw new NotImplementedException();
+            return _dbContext.Categories.Any(c =>
+            c.CategoryName.ToUpper() == category.CategoryName.ToUpper());
         }
 
         public IEnumerable<Category> GetAll()
@@ -40,6 +41,11 @@ namespace TPInvOp.Data.Repositories
         public Category? GetById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public void SaveChanges()
+        {
+            _dbContext.SaveChanges();
         }
     }
 }
