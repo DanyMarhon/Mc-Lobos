@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TPInvOp.Data\TPInvOp.Data.csproj" />
+    <ProjectReference Include="..\TPInvOp.Service\TPInvOp.Service.csproj" />
+  </ItemGroup>
+
 </Project>
