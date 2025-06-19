@@ -14,7 +14,7 @@ namespace TPInvOp.Web.Controllers
 
         public IActionResult Index()
         {
-            var categories = _categoryService.GetAll();
+            var categories = _categoryService.GetAll("NAME");
             return View(categories);
         }
         

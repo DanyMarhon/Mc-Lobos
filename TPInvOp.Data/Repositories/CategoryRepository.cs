@@ -1,4 +1,5 @@
-﻿using TPInvOp.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using TPInvOp.Data.Interfaces;
 using TPInvOp.Model.Entities;
 
 namespace TPInvOp.Data.Repositories
@@ -17,30 +18,57 @@ namespace TPInvOp.Data.Repositories
             _dbContext.Categories.Add(category);
         }
 
-        public void Delete(Category category)
+        public void Delete(int categoryId)
         {
-            throw new NotImplementedException();
+            var categoryInDb = GetById(categoryId, true);
+            if (categoryInDb != null)
+            {
+                _dbContext.Categories.Remove(categoryInDb);
+            }
         }
 
         public void Edit(Category category)
         {
-            throw new NotImplementedException();
+            var categoryInDb = GetById(category.CategoryId, true);
+            if (categoryInDb != null)
+            {
+                categoryInDb.CategoryName = category.CategoryName;
+                categoryInDb.Description = category.Description;
+            }
         }
 
-        public bool Exist(Category category)
+        public bool Exist(string name, int? excludeId = null)
         {
-            return _dbContext.Categories.Any(c =>
-            c.CategoryName.ToUpper() == category.CategoryName.ToUpper());
+            return excludeId.HasValue
+                ? _dbContext.Categories
+                            .Any(c => c.CategoryName.ToUpper() == name.ToUpper() 
+                                && c.CategoryId != excludeId)
+                : _dbContext.Categories
+                            .Any(c => c.CategoryName.ToUpper() == name.ToUpper());
         }
 
-        public IEnumerable<Category> GetAll()
+        public IEnumerable<Category> GetAll(string? sortedBy = null)
         {
-            return _dbContext.Categories.ToList();
+            IQueryable<Category> query = _dbContext.Categories
+                .AsNoTracking();
+            switch (sortedBy?.ToLower())
+            {
+                case "name":
+                    return query.OrderBy(c => c.CategoryName).ToList();
+                case "longitud":
+                    return query.OrderBy(c => c.CategoryName.Length).ToList();
+                default:
+                    return query.OrderBy(c => c.CategoryId).ToList();
+            }
         }
 
-        public Category? GetById(int id)
+        public Category? GetById(int id, bool tracked)
         {
-            throw new NotImplementedException();
+            return tracked
+                ? _dbContext.Categories
+                            .FirstOrDefault(c => c.CategoryId == id)
+                : _dbContext.Categories.AsNoTracking()
+                            .FirstOrDefault(c => c.CategoryId == id);
         }
 
         public void SaveChanges()
