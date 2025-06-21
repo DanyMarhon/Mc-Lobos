@@ -31,10 +31,14 @@ namespace TPInvOp.Service.Services
             Category category = _mapper.Map<Category>(categoryDto);
             if (!_unitOfWork.Categories.Exist(category.CategoryName))
             {
+                CategoryValidator validations = new CategoryValidator();
+                if (!UniversalValidator.IsValid(category, validations, out errors))
+                {
+                    return false;
+                }
                 _unitOfWork.Categories.Add(category);
                 int rowsAffected = _unitOfWork.Complete();
                 return rowsAffected > 0;
-
             }
             else
             {

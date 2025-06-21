@@ -1,5 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using TPInvOp.Ioc;
 using TPInvOp.Service.Mappers;
+using TPInvOp.Service.Validators;
 
 namespace TPInvOp.Web
 {
@@ -13,6 +16,10 @@ namespace TPInvOp.Web
             builder.Services.AddControllersWithViews();
 
             DI.ConfigureDI(builder.Services, builder.Configuration);
+
+            builder.Services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
+            builder.Services.AddFluentValidationAutoValidation();
+
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
             builder.Services.AddAutoMapper(typeof(MappingProfileDto).Assembly);
 

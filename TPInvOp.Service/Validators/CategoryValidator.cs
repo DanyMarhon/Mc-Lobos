@@ -8,9 +8,10 @@ namespace TPInvOp.Service.Validators
         public CategoryValidator()
         {
             RuleFor(c => c.CategoryName).NotEmpty().WithMessage("The {PropertyName} is required")
-                .MaximumLength(50).WithMessage("The PropertyName must have no more than {ComparisonValue} characters");
+               .MinimumLength(3).WithMessage("Must have al least {MinLength} characters")
+               .MaximumLength(50).WithMessage("No more than {MaxLength} characters");
 
-            RuleFor(c => c.Description).NotEmpty()
+            RuleFor(c => c.Description)
                 .MaximumLength(80).WithMessage("The PropertyDescription must have no more than {ComparisonValue} characters");
         }
     }
