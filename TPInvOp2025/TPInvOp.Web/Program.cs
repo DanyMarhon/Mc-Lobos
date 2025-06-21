@@ -1,4 +1,5 @@
 using TPInvOp.Ioc;
+using TPInvOp.Service.Mappers;
 
 namespace TPInvOp.Web
 {
@@ -12,6 +13,8 @@ namespace TPInvOp.Web
             builder.Services.AddControllersWithViews();
 
             DI.ConfigureDI(builder.Services, builder.Configuration);
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
+            builder.Services.AddAutoMapper(typeof(MappingProfileDto).Assembly);
 
             var app = builder.Build();
 

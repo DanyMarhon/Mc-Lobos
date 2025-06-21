@@ -1,10 +1,12 @@
 ﻿@model Category
 
-<form>
+<form method="post">
     <div class="mb-3">
-        <label for="Inputname" class="form-label">Category Name</label>
-        <input type="Name" class="form-control" id="CategoryName" aria-describedby="Category">
+        <div asp-validation-summary="ModelOnly" class="text-danger"> </div>@*//En caso de no ser valido muestra el error@ *@
+        <label class="form-label" asp-for="CategoryName"></label>
+        <input class="form-control" asp-for="CategoryName">
+        <span class="text-danger" asp-validation-for="CategoryName"></span>
     </div>
-    <button type="save" class="btn btn-success">Save</button>
+    <button type="submit" class="btn btn-success">Save</button>
     <a class="btn btn-primary" asp-controller="Categories" asp-action="Index">Cancel</a>
 </form>

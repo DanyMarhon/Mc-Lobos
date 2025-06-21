@@ -49,17 +49,7 @@ namespace TPInvOp.Data.Repositories
 
         public IEnumerable<Category> GetAll(string? sortedBy = null)
         {
-            IQueryable<Category> query = _dbContext.Categories
-                .AsNoTracking();
-            switch (sortedBy?.ToLower())
-            {
-                case "name":
-                    return query.OrderBy(c => c.CategoryName).ToList();
-                case "longitud":
-                    return query.OrderBy(c => c.CategoryName.Length).ToList();
-                default:
-                    return query.OrderBy(c => c.CategoryId).ToList();
-            }
+            return _dbContext.Categories.ToList();
         }
 
         public Category? GetById(int id, bool tracked)

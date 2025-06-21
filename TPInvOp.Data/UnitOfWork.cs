@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TPInvOp.Data.Interfaces;
+﻿using TPInvOp.Data.Interfaces;
 
 namespace TPInvOp.Data
 {
@@ -17,6 +12,7 @@ namespace TPInvOp.Data
         }
 
         public ICategoryRepository Categories { get; }
+
         public int Complete()
         {
             return _dbContext.SaveChanges();

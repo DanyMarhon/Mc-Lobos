@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TPInvOp.Service.DTOs.Category
 {
-    public class CategoryCreateDto
+    public class CategoryListDto
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; } = null!;
