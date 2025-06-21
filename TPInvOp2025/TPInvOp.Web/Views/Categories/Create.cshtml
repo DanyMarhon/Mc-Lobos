@@ -1,12 +1,39 @@
 ﻿@model CategoryEditVm
 
-<form method="post">
+
+<form method="post" asp-action="Create">
+    <h1>Category Create</h1>
     <div class="mb-3">
-        <div asp-validation-summary="ModelOnly" class="text-danger"> </div>@*//En caso de no ser valido muestra el error@ *@
+        <p class="text-muted">
+            In this space, you can create a new category.<br />
+            Please be responsible and follow the guidelines.<br />
+            <br />
+            •He name is required.<br />
+            •It must be between 3 and 50 characters.<br />
+            •The description is not required, but it's always good to have a reference.
+        </p>
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="invalid-feedback d-block"> </div>@*//En caso de no ser valido muestra el error@ *@
+
+    <div class="mb-3">
         <label class="form-label" asp-for="CategoryName"></label>
         <input class="form-control" asp-for="CategoryName">
-        <span class="text-danger" asp-validation-for="CategoryName"></span>
+        <span class="invalid-feedback d-block" asp-validation-for="CategoryName"></span>
     </div>
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="Description"></label>
+        <input class="form-control" asp-for="Description">
+        <span class="invalid-feedback d-block" asp-validation-for="Description"></span>
+    </div>
+
     <button type="submit" class="btn btn-success">Save</button>
     <a class="btn btn-primary" asp-controller="Categories" asp-action="Index">Cancel</a>
 </form>
+
+@section Scripts{
+    @{
+        <partial name ="_ValidationScriptsPartial" />
+    }
+}

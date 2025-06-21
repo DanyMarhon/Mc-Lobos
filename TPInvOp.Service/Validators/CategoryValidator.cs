@@ -12,7 +12,7 @@ namespace TPInvOp.Service.Validators
                .MaximumLength(50).WithMessage("No more than {MaxLength} characters");
 
             RuleFor(c => c.Description)
-                .MaximumLength(80).WithMessage("The PropertyDescription must have no more than {ComparisonValue} characters");
+                .MaximumLength(225).WithMessage("No more than {MaxLength} characters");
         }
     }
 }
