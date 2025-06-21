@@ -25,7 +25,7 @@ namespace TPInvOp.Service.Services
             return _mapper.Map<List<CategoryListDto>>(categories);
         }
 
-        public bool Save(CategoryEditDto categoryDto, out List<string> errors)
+        public bool Add(CategoryEditDto categoryDto, out List<string> errors)
         {
             errors = new List<string>();
             Category category = _mapper.Map<Category>(categoryDto);

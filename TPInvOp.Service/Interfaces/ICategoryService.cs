@@ -7,7 +7,7 @@ namespace TPInvOp.Service.Interfaces
     public interface ICategoryService
     {
         IEnumerable<CategoryListDto> GetAll();
-        bool Save(CategoryEditDto categoryDto, out List<string> errors);
+        bool Add(CategoryEditDto categoryDto, out List<string> errors);
         void Delete(int categoryId);
         bool Exist(string name, int? excludeId = null);
         Category? CategoryById(int id, bool tracked = false);

@@ -38,7 +38,7 @@ namespace TPInvOp.Web.Controllers
                 CategoryEditDto categoryDto = _mapper.Map<CategoryEditDto>(categoryVm);
                 try
                 {
-                    if (_categoryService.Save(categoryDto, out var errors))
+                    if (_categoryService.Add(categoryDto, out var errors))
                     {
                         TempData["success"] = "Register Successfully Added";
                         return RedirectToAction("Index");
