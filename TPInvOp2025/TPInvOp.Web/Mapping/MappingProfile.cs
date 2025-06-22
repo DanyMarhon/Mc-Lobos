@@ -2,7 +2,9 @@
 using BookShop2025.Service.DTOs.Category;
 using BookShop2025.Web.ViewModels.Category;
 using TPInvOp.Service.DTOs.Category;
+using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Web.ViewModels.Category;
+using TPInvOp.Web.ViewModels.Locality;
 
 namespace TPInvOp.Web.Mapping
 {
@@ -11,6 +13,13 @@ namespace TPInvOp.Web.Mapping
         public MappingProfile()
         {
             LoadCategoryMapping();
+            LoadLocalityMapping();
+        }
+
+        private void LoadLocalityMapping()
+        {
+            CreateMap<LocalityListDto, LocalityListVm>();
+            CreateMap<LocalityEditVm, LocalityEditDto>();
         }
 
         private void LoadCategoryMapping()

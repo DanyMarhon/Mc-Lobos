@@ -18,6 +18,7 @@ namespace TPInvOp.Web
             DI.ConfigureDI(builder.Services, builder.Configuration);
 
             builder.Services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
+            builder.Services.AddValidatorsFromAssemblyContaining<LocalityValidator>();
             builder.Services.AddFluentValidationAutoValidation();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);

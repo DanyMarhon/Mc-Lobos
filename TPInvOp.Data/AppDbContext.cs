@@ -11,6 +11,7 @@ namespace TPInvOp.Data
 
         public AppDbContext() { }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Locality> Localities { get; set; }
 
 
         //{(Creo yo que deberiamos usar la conexión del DI acá y no esta

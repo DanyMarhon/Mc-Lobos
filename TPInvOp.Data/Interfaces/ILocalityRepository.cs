@@ -9,11 +9,12 @@ namespace TPInvOp.Data.Interfaces
 {
     public interface ILocalityRepository
     {
-        IEnumerable<Locality> GetAll();
-        Locality? GetById(int id);
+        IEnumerable<Locality> GetAll(string? sortedBy = null);
+        Locality? GetById(int id, bool tracked = false);
         void Add(Locality locality);
-        bool Exist(Locality locality);
+        bool Exist(string name, int? excludeId = null);
         void Edit(Locality locality);
-        void Delete(Locality locality);
+        void Delete(int localityId);
+        void SaveChanges();
     }
 }
