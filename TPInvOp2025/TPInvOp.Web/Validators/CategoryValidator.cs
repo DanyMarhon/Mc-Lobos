@@ -1,4 +1,4 @@
-﻿using BookShop2025.Web.ViewModels.Category;
+﻿using TPInvOp.Web.ViewModels.Category;
 using FluentValidation;
 
 namespace TPInvOp.Web.Validators

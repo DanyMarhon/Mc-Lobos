@@ -1,4 +1,4 @@
-﻿namespace BookShop2025.Service.DTOs.Category
+﻿namespace TPInvOp.Service.DTOs.Category
 {
     public class CategoryEditDto
     {

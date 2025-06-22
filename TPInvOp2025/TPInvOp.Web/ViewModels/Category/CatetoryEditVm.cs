@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace BookShop2025.Web.ViewModels.Category
+namespace TPInvOp.Web.ViewModels.Category
 {
     public class CategoryEditVm
     {

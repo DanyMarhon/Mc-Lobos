@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BookShop2025.Service.DTOs.Category;
-using BookShop2025.Web.ViewModels.Category;
+using TPInvOp.Service.DTOs.Category;
+using TPInvOp.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Service.Interfaces;
