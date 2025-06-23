@@ -1,4 +1,5 @@
-﻿using TPInvOp.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using TPInvOp.Data.Interfaces;
 using TPInvOp.Model.Entities;
 
 namespace TPInvOp.Data.Repositories
@@ -13,32 +14,51 @@ namespace TPInvOp.Data.Repositories
         }
         public void Add(PaymentMethod paymentMethod)
         {
-            throw new NotImplementedException();
+            _dbContext.PaymentMethods.Add(paymentMethod);
         }
 
-        public void Delete(PaymentMethod paymentMethod)
+        public void Delete(int paymentMethodId)
         {
-            throw new NotImplementedException();
+            var paymentMethodInDb = GetById(paymentMethodId, true);
+            if (paymentMethodInDb != null)
+            {
+                _dbContext.PaymentMethods.Remove(paymentMethodInDb);
+            }
         }
 
         public void Edit(PaymentMethod paymentMethod)
         {
-            throw new NotImplementedException();
+            var paymentMethodInDb = GetById(paymentMethod.PaymentMethodID, true);
+            if (paymentMethodInDb != null)
+            {
+                paymentMethodInDb.Name = paymentMethod.Name;
+                paymentMethodInDb.Description = paymentMethod.Description;
+            }
         }
 
-        public bool Exist(PaymentMethod paymentMethod)
+        public bool Exist(string name, int? excludeId = null)
         {
-            throw new NotImplementedException();
+            return excludeId.HasValue
+               ? _dbContext.PaymentMethods.Any(p => p.Name.ToUpper() == name.ToUpper()
+                               && p.PaymentMethodID != excludeId)
+               : _dbContext.PaymentMethods.Any(p => p.Name.ToUpper() == name.ToUpper());
         }
 
         public IEnumerable<PaymentMethod> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.PaymentMethods.ToList();
         }
 
-        public PaymentMethod? GetById(int id)
+        public PaymentMethod? GetById(int id, bool tracked = false)
         {
-            throw new NotImplementedException();
+           return tracked
+                ? _dbContext.PaymentMethods.FirstOrDefault(p=>p.PaymentMethodID == id) 
+                : _dbContext.PaymentMethods.AsNoTracking().FirstOrDefault(p=>p.PaymentMethodID==id);
+        }
+
+        public void SaveChanges()
+        {
+           _dbContext.SaveChanges();
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TPInvOp.Model.Entities
+namespace TPInvOp.Service.DTOs.PaymentMethod
 {
-    public class PaymentMethod
+    public class PaymentMethodListDto
     {
         public int PaymentMethodID { get; set; }
         public string Name { get; set; } = null!;

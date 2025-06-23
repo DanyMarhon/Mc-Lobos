@@ -3,6 +3,7 @@ using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Service.DTOs.Locality;
+using TPInvOp.Service.DTOs.PaymentMethod;
 
 namespace TPInvOp.Service.Mappers
 {
@@ -12,6 +13,7 @@ namespace TPInvOp.Service.Mappers
         {
             LoadCategoryMapping();
             LoadLocalityMapping();
+            LoadPaymentMethodMapping();
         }
 
         private void LoadLocalityMapping()
@@ -24,6 +26,12 @@ namespace TPInvOp.Service.Mappers
         {
             CreateMap<Category, CategoryListDto>();
             CreateMap<CategoryEditDto, Category>();
+        }
+
+        private void LoadPaymentMethodMapping()
+        {
+            CreateMap<PaymentMethod, PaymentMethodListDto>();
+            CreateMap<PaymentMethodEditDto, PaymentMethod>();
         }
     }
 }
