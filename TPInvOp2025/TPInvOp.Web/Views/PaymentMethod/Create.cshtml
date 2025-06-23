@@ -1,0 +1,49 @@
+﻿@model TPInvOp.Web.ViewModels.PaymentMethod.PaymentMethodEditVm
+
+<div class="container mt-5">
+    <div class="card shadow rounded">
+        <div class="card-header bg-success text-white">
+            <h2 class="mb-0">Crear Método de Pago</h2>
+        </div>
+        <div class="card-body">
+            <p class="text-muted">
+                En este espacio, podés crear un nuevo método de pago.<br />
+                Por favor, seguí las reglas:
+            </p>
+            <ul class="text-muted">
+                <li>El nombre es obligatorio.</li>
+                <li>Debe tener entre 3 y 50 caracteres.</li>
+            </ul>
+
+            <form method="post" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label fw-bold"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-bold"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input type="checkbox" asp-for="IsActive" class="form-check-input" />
+                    <label class="form-check-label" asp-for="IsActive">Activo</label>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success w-25">Guardar</button>
+                    <a asp-controller="PaymentMethod" asp-action="Index" class="btn btn-outline-secondary w-25">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

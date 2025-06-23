@@ -16,7 +16,7 @@ namespace TPInvOp.Ioc
 
             //Connection bd
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer("MyConnection"));
+    options.UseSqlServer(configuration.GetConnectionString("MyConnection"))); //ahora estamos usando la cadena que esta en el json. att Joaquin
 
             //Categories 
             services.AddScoped<ICategoryRepository, CategoryRepository>();

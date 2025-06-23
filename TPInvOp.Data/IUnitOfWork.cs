@@ -6,7 +6,7 @@ namespace TPInvOp.Data
     {
         ICategoryRepository Categories { get; }
         ILocalityRepository Localities { get; }
-
+        IPaymentMethodRepository PaymentMethod { get; }
         int Complete();
     }
 }
