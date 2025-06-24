@@ -1,18 +1,19 @@
-﻿@model TPInvOp.Web.ViewModels.PaymentMethod.PaymentMethodEditVm
+﻿@model PaymentMethodEditVm
 
 <div class="container mt-5">
     <div class="card shadow rounded">
         <div class="card-header bg-success text-white">
-            <h2 class="mb-0">Crear Método de Pago</h2>
+            <h2 class="mb-0">Create a new payment method</h2>
         </div>
         <div class="card-body">
             <p class="text-muted">
-                En este espacio, podés crear un nuevo método de pago.<br />
-                Por favor, seguí las reglas:
+                In this space, you can create a new Payment Method.<br />
+                Please be responsible and follow the guidelines.<br />
             </p>
             <ul class="text-muted">
-                <li>El nombre es obligatorio.</li>
-                <li>Debe tener entre 3 y 50 caracteres.</li>
+                <li>He name is required.</li>
+                <li>It must be between 3 and 50 characters.</li>
+                <li>The description is not required, but it's always good to have a reference.</li>
             </ul>
 
             <form method="post" asp-action="Create">
@@ -32,12 +33,14 @@
 
                 <div class="form-check mb-4">
                     <input type="checkbox" asp-for="IsActive" class="form-check-input" />
-                    <label class="form-check-label" asp-for="IsActive">Activo</label>
+                    <label class="form-check-label" asp-for="IsActive">
+                        Asset
+                    </label>
                 </div>
 
-                <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success w-25">Guardar</button>
-                    <a asp-controller="PaymentMethod" asp-action="Index" class="btn btn-outline-secondary w-25">Cancelar</a>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success w-25 m-3">Save</button>
+                    <a asp-controller="PaymentMethod" asp-action="Index" class="btn btn-outline-secondary w-25 m-3">Cancel</a>
                 </div>
             </form>
         </div>

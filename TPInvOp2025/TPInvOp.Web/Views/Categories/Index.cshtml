@@ -1,9 +1,113 @@
-﻿@using TPInvOp.Web.ViewModels.Category
-@model IEnumerable<CategoryListVm>
+﻿@model IEnumerable<CategoryListVm>
 @*//Al agregar una new cat. si el teamdata es distinto
     de null muestra el mensaje que lo pudo agregar*@
 @if (TempData.Count > 0)
 {
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>✔ OK!</strong> @TempData["success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+<div class="card shadow rounded mt-4 mb-5">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Category List</h4>
+        <a class="btn btn-light text-primary fw-bold" asp-controller="Categories" asp-action="Create">
+            <i class="bi bi-plus-circle me-1"></i> New Category
+        </a>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning m-3">
+                <p>There are no registered categories</p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var category in Model)
+                    {
+                        <tr>
+                            <td>@category.CategoryName</td>
+                            @*  <td class="text-end">
+                                <a asp-action="Edit" asp-route-id="@payment.PaymentMethodID" class="btn btn-sm btn-outline-warning me-1">
+                                    <i class="bi bi-pencil-square"></i> Edi
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@payment.PaymentMethodID" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td> *@
+                            <td class="text-end">
+                                <button type="button" class="btn btn-sm btn-outline-warning me-1" data-bs-toggle="modal" data-bs-target="#unavailableModal">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#unavailableModal">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+<div class="modal fade" id="unavailableModal" tabindex="-1" aria-labelledby="unavailableModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow">
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title" id="unavailableModalLabel">Attention</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <i class="bi bi-exclamation-triangle display-4 text-warning mb-3"></i>
+                <p class="fs-5 mb-0">
+                    We're sorry :(<br />
+                    We'll be working here soon..
+                </p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>OK!</strong> @TempData["success"]
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -35,4 +139,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@
