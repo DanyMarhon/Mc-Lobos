@@ -17,14 +17,15 @@ namespace TPInvOp.Service.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-   
+
 
         public bool Add(PaymentMethodEditDto paymentMethodDto, out List<string> errors)
         {
             errors = new List<string>();
             PaymentMethod payment = _mapper.Map<PaymentMethod>(paymentMethodDto);
             if (!_unitOfWork.PaymentMethod.Exist(payment.Name))
-            {PaymentMethodValidator validator = new PaymentMethodValidator();
+            {
+                PaymentMethodValidator validator = new PaymentMethodValidator();
                 if (!UniversalValidator.IsValid(payment, validator, out errors))
                 {
                     return false;
@@ -46,12 +47,12 @@ namespace TPInvOp.Service.Services
 
         public bool Exist(string name, int? excludeId = null)
         {
-           return _unitOfWork.PaymentMethod.Exist(name, excludeId);
+            return _unitOfWork.PaymentMethod.Exist(name, excludeId);
         }
 
         public IEnumerable<PaymentMethodListDto> GetAll()
         {
-          var payment = _unitOfWork.PaymentMethod.GetAll();
+            var payment = _unitOfWork.PaymentMethod.GetAll();
             return _mapper.Map<List<PaymentMethodListDto>>(payment);
         }
 

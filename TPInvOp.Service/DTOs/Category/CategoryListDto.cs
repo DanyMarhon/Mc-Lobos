@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TPInvOp.Service.DTOs.Category
+﻿namespace TPInvOp.Service.DTOs.Category
 {
     public class CategoryListDto
     {

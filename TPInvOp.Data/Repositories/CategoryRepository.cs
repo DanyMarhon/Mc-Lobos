@@ -41,7 +41,7 @@ namespace TPInvOp.Data.Repositories
         {
             return excludeId.HasValue
                 ? _dbContext.Categories
-                            .Any(c => c.CategoryName.ToUpper() == name.ToUpper() 
+                            .Any(c => c.CategoryName.ToUpper() == name.ToUpper()
                                 && c.CategoryId != excludeId)
                 : _dbContext.Categories
                             .Any(c => c.CategoryName.ToUpper() == name.ToUpper());

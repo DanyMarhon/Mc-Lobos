@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Service.DTOs.Locality;

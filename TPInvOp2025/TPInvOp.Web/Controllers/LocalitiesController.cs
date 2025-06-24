@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using TPInvOp.Service.DTOs.Category;
-using TPInvOp.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Service.Interfaces;
-using TPInvOp.Service.Services;
-using TPInvOp.Web.ViewModels.Category;
 using TPInvOp.Web.ViewModels.Locality;
 
 namespace TPInvOp.Web.Controllers

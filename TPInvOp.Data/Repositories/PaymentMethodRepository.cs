@@ -51,14 +51,14 @@ namespace TPInvOp.Data.Repositories
 
         public PaymentMethod? GetById(int id, bool tracked = false)
         {
-           return tracked
-                ? _dbContext.PaymentMethods.FirstOrDefault(p=>p.PaymentMethodID == id) 
-                : _dbContext.PaymentMethods.AsNoTracking().FirstOrDefault(p=>p.PaymentMethodID==id);
+            return tracked
+                 ? _dbContext.PaymentMethods.FirstOrDefault(p => p.PaymentMethodID == id)
+                 : _dbContext.PaymentMethods.AsNoTracking().FirstOrDefault(p => p.PaymentMethodID == id);
         }
 
         public void SaveChanges()
         {
-           _dbContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

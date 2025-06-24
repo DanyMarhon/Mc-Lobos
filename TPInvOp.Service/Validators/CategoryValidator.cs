@@ -12,7 +12,7 @@ namespace TPInvOp.Service.Validators
                .MaximumLength(50).WithMessage("No more than {MaxLength} characters");
 
             RuleFor(c => c.Description)
-                .MaximumLength(225).WithMessage("No more than {MaxLength} characters");
+                .MaximumLength(255).WithMessage("No more than {MaxLength} characters");
         }
     }
 }

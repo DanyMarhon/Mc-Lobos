@@ -1,5 +1,5 @@
-﻿using TPInvOp.Web.ViewModels.Category;
-using FluentValidation;
+﻿using FluentValidation;
+using TPInvOp.Web.ViewModels.Category;
 
 namespace TPInvOp.Web.Validators
 {

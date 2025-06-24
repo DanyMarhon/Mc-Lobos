@@ -1,9 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPInvOp.Model.Entities;
 
 namespace TPInvOp.Service.Validators
@@ -18,7 +13,7 @@ namespace TPInvOp.Service.Validators
                 .MaximumLength(50).WithMessage("No more than {MaxLength} characters");
 
             RuleFor(c => c.Description)
-                .MaximumLength(225).WithMessage("No more than {MaxLength} characters in the description");
+                .MaximumLength(255).WithMessage("No more than {MaxLength} characters in the description");
         }
     }
 }

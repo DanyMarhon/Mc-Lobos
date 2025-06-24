@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Data;
 using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.Category;
@@ -44,7 +43,7 @@ namespace TPInvOp.Service.Services
             {
                 errors.Add("Category Already Exist!!");
                 return false;
-            } 
+            }
         }
 
         public Category? CategoryById(int id, bool tracked = false)

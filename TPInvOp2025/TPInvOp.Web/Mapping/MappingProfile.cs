@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using TPInvOp.Service.DTOs.Category;
-using TPInvOp.Web.ViewModels.Category;
-using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Service.DTOs.Locality;
+using TPInvOp.Service.DTOs.PaymentMethod;
 using TPInvOp.Web.ViewModels.Category;
 using TPInvOp.Web.ViewModels.Locality;
-using TPInvOp.Model.Entities;
-using TPInvOp.Service.DTOs.PaymentMethod;
 using TPInvOp.Web.ViewModels.PaymentMethod;
 
 namespace TPInvOp.Web.Mapping
@@ -35,7 +32,7 @@ namespace TPInvOp.Web.Mapping
         {
             CreateMap<PaymentMethodListDto, PaymentMethodListVm>();
             CreateMap<PaymentMethodEditVm, PaymentMethodEditDto>();
-         
+
         }
     }
 }

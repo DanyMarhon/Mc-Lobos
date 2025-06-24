@@ -1,11 +1,11 @@
-﻿using TPInvOp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using TPInvOp.Data;
 using TPInvOp.Data.Interfaces;
 using TPInvOp.Data.Repositories;
 using TPInvOp.Service.Interfaces;
 using TPInvOp.Service.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 
 namespace TPInvOp.Ioc
 {

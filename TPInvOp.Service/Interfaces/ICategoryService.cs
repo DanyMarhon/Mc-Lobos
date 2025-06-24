@@ -1,5 +1,4 @@
-﻿using TPInvOp.Service.DTOs.Category;
-using TPInvOp.Model.Entities;
+﻿using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.Category;
 
 namespace TPInvOp.Service.Interfaces

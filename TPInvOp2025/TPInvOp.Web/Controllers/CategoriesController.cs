@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using TPInvOp.Service.DTOs.Category;
-using TPInvOp.Web.ViewModels.Category;
 using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Service.Interfaces;
