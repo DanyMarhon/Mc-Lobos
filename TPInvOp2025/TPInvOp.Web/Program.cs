@@ -2,7 +2,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using TPInvOp.Ioc;
 using TPInvOp.Service.Mappers;
-using TPInvOp.Service.Validators;
+using TPInvOp.Web.Validators;
 
 namespace TPInvOp.Web
 {

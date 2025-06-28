@@ -3,7 +3,6 @@ using TPInvOp.Data;
 using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Service.Interfaces;
-using TPInvOp.Service.Validators;
 
 namespace TPInvOp.Service.Services
 {
@@ -24,11 +23,6 @@ namespace TPInvOp.Service.Services
             Locality locality = _mapper.Map<Locality>(localityDto);
             if (!_unitOfWork.Localities.Exist(locality.LocalityName))
             {
-                LocalityValidator validations = new LocalityValidator();
-                if (!UniversalValidator.IsValid(locality, validations, out errors))
-                {
-                    return false;
-                }
                 _unitOfWork.Localities.Add(locality);
                 int rowsAffected = _unitOfWork.Complete();
                 return rowsAffected > 0;

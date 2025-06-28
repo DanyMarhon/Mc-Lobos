@@ -3,7 +3,6 @@ using TPInvOp.Data;
 using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.PaymentMethod;
 using TPInvOp.Service.Interfaces;
-using TPInvOp.Service.Validators;
 
 namespace TPInvOp.Service.Services
 {
@@ -25,11 +24,6 @@ namespace TPInvOp.Service.Services
             PaymentMethod payment = _mapper.Map<PaymentMethod>(paymentMethodDto);
             if (!_unitOfWork.PaymentMethod.Exist(payment.Name))
             {
-                PaymentMethodValidator validator = new PaymentMethodValidator();
-                if (!UniversalValidator.IsValid(payment, validator, out errors))
-                {
-                    return false;
-                }
                 _unitOfWork.PaymentMethod.Add(payment);
                 int rowsAffected = _unitOfWork.Complete();
                 return rowsAffected > 0;
