@@ -39,7 +39,7 @@ namespace TPInvOp.Service.Services
             }
             else
             {
-                if (!_unitOfWork.Localities.Exist(locality))
+                if (!_unitOfWork.Localities.Exist(locality, locality.LocalityId))
                 {
                     _unitOfWork.Localities.Update(locality);
                     int rowsAffected = _unitOfWork.Complete();

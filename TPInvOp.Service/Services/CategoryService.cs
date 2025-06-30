@@ -39,7 +39,7 @@ namespace TPInvOp.Service.Services
             }
             else
             {
-                if (!_unitOfWork.Categories.Exist(category))
+                if (!_unitOfWork.Categories.Exist(category, category.CategoryId))
                 {
                     _unitOfWork.Categories.Update(category);
                     int rowsAffected = _unitOfWork.Complete();

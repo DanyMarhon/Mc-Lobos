@@ -39,7 +39,7 @@ namespace TPInvOp.Service.Services
             }
             else
             {
-                if (!_unitOfWork.PaymentMethod.Exist(paymentMethod))
+                if (!_unitOfWork.PaymentMethod.Exist(paymentMethod, paymentMethod.PaymentMethodId))
                 {
                     _unitOfWork.PaymentMethod.Update(paymentMethod);
                     int rowsAffected = _unitOfWork.Complete();
