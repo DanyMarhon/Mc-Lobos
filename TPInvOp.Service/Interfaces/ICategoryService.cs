@@ -5,11 +5,11 @@ namespace TPInvOp.Service.Interfaces
 {
     public interface ICategoryService
     {
-        bool Add(CategoryEditDto categoryDto, out List<string> errors);
-        void Delete(int categoryId);
-        bool Exist(string name, int? excludeId = null);
-        Category? CategoryById(int id, bool tracked = false);
-        IEnumerable<CategoryListDto> GetAll(string? sortedBy = null);
+        bool Save(CategoryEditDto categoryDto, out List<string> errors);
+        bool Remove(int categoryId, out List<string> errors);
+        bool Exist(Category category, int? excludeId = null);
+        CategoryEditDto? CategoryById(int id);
+        IQueryable<CategoryListDto> GetAll();
 
     }
 }

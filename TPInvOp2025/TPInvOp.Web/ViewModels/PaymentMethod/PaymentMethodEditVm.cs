@@ -4,7 +4,7 @@ namespace TPInvOp.Web.ViewModels.PaymentMethod
 {
     public class PaymentMethodEditVm
     {
-        public int PaymentMethodID { get; set; }
+        public int PaymentMethodId { get; set; }
         [DisplayName("Payment Method Name")]
         public string Name { get; set; } = null!;
         [DisplayName("Description")]

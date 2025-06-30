@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TPInvOp.Data;
-using TPInvOp.Data.Interfaces;
-using TPInvOp.Data.Repositories;
 using TPInvOp.Service.Interfaces;
 using TPInvOp.Service.Services;
 
@@ -19,19 +17,16 @@ namespace TPInvOp.Ioc
     options.UseSqlServer(configuration.GetConnectionString("MyConnection"))); //ahora estamos usando la cadena que esta en el json. att Joaquin
 
             //Categories 
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
 
             //Locality 
-            services.AddScoped<ILocalityRepository, LocalityRepository>();
             services.AddScoped<ILocalityService, LocalityService>();
 
             //PaymentMethod 
-            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            // Los repos de acá volaron porque ahora se instancian desde el UnitOfWork -Dany
             return services.BuildServiceProvider();
         }
     }

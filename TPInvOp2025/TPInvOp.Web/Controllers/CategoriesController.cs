@@ -29,6 +29,7 @@ namespace TPInvOp.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(CategoryEditVm categoryVm)
         {
             if (ModelState.IsValid)
@@ -36,7 +37,7 @@ namespace TPInvOp.Web.Controllers
                 CategoryEditDto categoryDto = _mapper.Map<CategoryEditDto>(categoryVm);
                 try
                 {
-                    if (_categoryService.Add(categoryDto, out var errors))
+                    if (_categoryService.Save(categoryDto, out var errors))
                     {
                         TempData["success"] = "Register Successfully Added";
                         return RedirectToAction("Index");
@@ -55,6 +56,118 @@ namespace TPInvOp.Web.Controllers
 
             }
             return View(categoryVm);
+        }
+        public IActionResult Edit(int? id)
+        {
+            if (id is null || id == 0)
+            {
+                return NotFound();
+            }
+            try
+            {
+                CategoryEditDto? categoryDto = _categoryService.CategoryById(id.Value);
+                if (categoryDto is null)
+                {
+                    return NotFound($"Category With Id {id} Not Found!!");
+                }
+                CategoryEditVm categoryVm = _mapper.Map<CategoryEditVm>(categoryDto);
+                return View(categoryVm);
+            }
+            catch (Exception)
+            {
+
+                TempData["error"] = "Error while trying to get a category";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(CategoryEditVm categoryVm)
+        {
+            if (ModelState.IsValid)
+            {
+                CategoryEditDto categoryDto = _mapper.Map<CategoryEditDto>(categoryVm);
+                try
+                {
+                    if (_categoryService.Save(categoryDto, out var errors))
+                    {
+                        TempData["success"] = "Register Successfully Updated";
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, errors.First());
+                    }
+                    return View(categoryVm);
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError(string.Empty, "F!ck!! Something Happen" + ex.Message);
+                }
+
+            }
+            return View(categoryVm);
+        }
+        public IActionResult Delete(int? id)
+        {
+            if (id is null || id == 0)
+            {
+                return NotFound();
+            }
+            try
+            {
+                CategoryEditDto? categoryDto = _categoryService.CategoryById(id.Value);
+                if (categoryDto is null)
+                {
+                    return NotFound($"Category With Id {id} Not Found!!");
+                }
+                CategoryEditVm categoryVm = _mapper.Map<CategoryEditVm>(categoryDto);
+                return View(categoryVm);
+            }
+            catch (Exception)
+            {
+
+                TempData["error"] = "Error while trying to get a category";
+                return RedirectToAction("Index");
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirm(int? id)
+        {
+            if (id is null || id == 0)
+            {
+                return NotFound();
+            }
+            try
+            {
+                CategoryEditDto? categoryDto = _categoryService.CategoryById(id.Value);
+                if (categoryDto is null)
+                {
+                    return NotFound($"Category With Id {id} Not Found!!");
+                }
+                if (_categoryService.Remove(id.Value, out var errors))
+                {
+                    TempData["success"] = "Category Succesfully Removed";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    CategoryEditVm categoryVm = _mapper.Map<CategoryEditVm>(categoryDto);
+                    ModelState.AddModelError(string.Empty, errors.First());
+                    return View(categoryVm);
+
+                }
+            }
+            catch (Exception)
+            {
+
+                TempData["error"] = "Error while trying to get a category";
+                return RedirectToAction("Index");
+            }
+
         }
     }
 }

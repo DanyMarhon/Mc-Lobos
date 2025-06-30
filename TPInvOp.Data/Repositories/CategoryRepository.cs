@@ -18,47 +18,46 @@ namespace TPInvOp.Data.Repositories
             _dbContext.Categories.Add(category);
         }
 
-        public void Delete(int categoryId)
+        public void Remove(int categoryId)
         {
-            var categoryInDb = GetById(categoryId, true);
-            if (categoryInDb != null)
+            var categoryInDb = GetById(categoryId);
+            if (categoryInDb is not null)
             {
-                _dbContext.Categories.Remove(categoryInDb);
+                _dbContext.Entry(categoryInDb).State = EntityState.Deleted;
             }
         }
 
-        public void Edit(Category category)
+        public void Update(Category category)
         {
-            var categoryInDb = GetById(category.CategoryId, true);
+            var categoryInDb = GetById(category.CategoryId);
             if (categoryInDb != null)
             {
                 categoryInDb.CategoryName = category.CategoryName;
                 categoryInDb.Description = category.Description;
+                categoryInDb.IsActive = category.IsActive;
+
+                _dbContext.Entry(categoryInDb).State = EntityState.Modified;
             }
         }
 
-        public bool Exist(string name, int? excludeId = null)
+        public bool Exist(Category category, int? excludeId = null)
         {
             return excludeId.HasValue
                 ? _dbContext.Categories
-                            .Any(c => c.CategoryName.ToUpper() == name.ToUpper()
+                            .Any(c => c.CategoryName.ToUpper() == category.CategoryName.ToUpper()
                                 && c.CategoryId != excludeId)
                 : _dbContext.Categories
-                            .Any(c => c.CategoryName.ToUpper() == name.ToUpper());
+                            .Any(c => c.CategoryName.ToUpper() == category.CategoryName.ToUpper());
         }
 
-        public IEnumerable<Category> GetAll(string? sortedBy = null)
+        public IQueryable<Category> GetAll()
         {
-            return _dbContext.Categories.ToList();
+            return (IQueryable<Category>)_dbContext.Categories.AsNoTracking();
         }
 
-        public Category? GetById(int id, bool tracked)
+        public Category? GetById(int id)
         {
-            return tracked
-                ? _dbContext.Categories
-                            .FirstOrDefault(c => c.CategoryId == id)
-                : _dbContext.Categories.AsNoTracking()
-                            .FirstOrDefault(c => c.CategoryId == id);
+            return _dbContext.Categories.AsNoTracking().FirstOrDefault(c => c.CategoryId == id);
         }
 
         public void SaveChanges()

@@ -28,17 +28,17 @@
                 <thead class="table-light">
                     <tr>
                         <th>Name</th>
-                        <th>Asset</th>
+                        <th>Is Active</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var payment in Model)
+                    @foreach (var paymentMethod in Model)
                     {
                         <tr>
-                            <td>@payment.Name</td>
+                            <td>@paymentMethod.Name</td>
                             <td>
-                                @if (payment.IsActive)
+                                @if (paymentMethod.IsActive)
                                 {
                                     <span class="badge bg-success">Yes</span>
                                 }
@@ -47,21 +47,15 @@
                                     <span class="badge bg-secondary">No</span>
                                 }
                             </td>
-                           @*  <td class="text-end">
-                                <a asp-action="Edit" asp-route-id="@payment.PaymentMethodID" class="btn btn-sm btn-outline-warning me-1">
-                                    <i class="bi bi-pencil-square"></i> Editar
-                                </a>
-                                <a asp-action="Delete" asp-route-id="@payment.PaymentMethodID" class="btn btn-sm btn-outline-danger">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </a>
-                            </td> *@
                             <td class="text-end">
-                                <button type="button" class="btn btn-sm btn-outline-warning me-1" data-bs-toggle="modal" data-bs-target="#unavailableModal">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#unavailableModal">
-                                    <i class="bi bi-trash"></i> Delete
-                                </button>
+                                <a class="btn btn-sm btn-outline-warning me-1" asp-controller="PaymentMethod" asp-action="Edit" asp-route-id="@paymentMethod.PaymentMethodId">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-sm btn-outline-danger" asp-controller="PaymentMethod" asp-action="Delete" asp-route-id="@paymentMethod.PaymentMethodId">
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </a>
                             </td>
 
                         </tr>
@@ -69,25 +63,5 @@
                 </tbody>
             </table>
         }
-    </div>
-</div>
-<div class="modal fade" id="unavailableModal" tabindex="-1" aria-labelledby="unavailableModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content shadow">
-            <div class="modal-header bg-warning text-dark">
-                <h5 class="modal-title" id="unavailableModalLabel">Attention</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <i class="bi bi-exclamation-triangle display-4 text-warning mb-3"></i>
-                <p class="fs-5 mb-0">
-                    We're sorry :(<br />
-                    We'll be working here soon..
-                </p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
     </div>
 </div>

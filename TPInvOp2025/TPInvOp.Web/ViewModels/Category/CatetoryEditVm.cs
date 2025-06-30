@@ -12,5 +12,8 @@ namespace TPInvOp.Web.ViewModels.Category
         [DisplayName("Category Description")]
         public string? Description { get; set; }
 
+        [DisplayName("Is Active?")]
+        public bool IsActive { get; set; }
+
     }
 }

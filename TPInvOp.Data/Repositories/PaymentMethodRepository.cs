@@ -17,43 +17,44 @@ namespace TPInvOp.Data.Repositories
             _dbContext.PaymentMethods.Add(paymentMethod);
         }
 
-        public void Delete(int paymentMethodId)
+        public void Remove(int paymentMethodId)
         {
-            var paymentMethodInDb = GetById(paymentMethodId, true);
-            if (paymentMethodInDb != null)
+            var paymentMethodInDb = GetById(paymentMethodId);
+            if (paymentMethodInDb is not null)
             {
-                _dbContext.PaymentMethods.Remove(paymentMethodInDb);
+                _dbContext.Entry(paymentMethodInDb).State = EntityState.Deleted;
             }
         }
 
-        public void Edit(PaymentMethod paymentMethod)
+        public void Update(PaymentMethod paymentMethod)
         {
-            var paymentMethodInDb = GetById(paymentMethod.PaymentMethodID, true);
-            if (paymentMethodInDb != null)
+            var paymentMehodInDb = GetById(paymentMethod.PaymentMethodId);
+            if (paymentMehodInDb != null)
             {
-                paymentMethodInDb.Name = paymentMethod.Name;
-                paymentMethodInDb.Description = paymentMethod.Description;
+                paymentMehodInDb.Name = paymentMethod.Name;
+                paymentMehodInDb.Description = paymentMethod.Description;
+                paymentMehodInDb.IsActive = paymentMethod.IsActive;
+
+                _dbContext.Entry(paymentMehodInDb).State = EntityState.Modified;
             }
         }
 
-        public bool Exist(string name, int? excludeId = null)
+        public bool Exist(PaymentMethod paymentMethod, int? excludeId = null)
         {
             return excludeId.HasValue
-               ? _dbContext.PaymentMethods.Any(p => p.Name.ToUpper() == name.ToUpper()
-                               && p.PaymentMethodID != excludeId)
-               : _dbContext.PaymentMethods.Any(p => p.Name.ToUpper() == name.ToUpper());
+               ? _dbContext.PaymentMethods.Any(p => p.Name.ToUpper() == paymentMethod.Name.ToUpper()
+                               && p.PaymentMethodId != excludeId)
+               : _dbContext.PaymentMethods.Any(p => p.Name.ToUpper() == paymentMethod.Name.ToUpper());
         }
 
-        public IEnumerable<PaymentMethod> GetAll()
+        public IQueryable<PaymentMethod> GetAll()
         {
-            return _dbContext.PaymentMethods.ToList();
+            return (IQueryable<PaymentMethod>)_dbContext.PaymentMethods.AsNoTracking();
         }
 
-        public PaymentMethod? GetById(int id, bool tracked = false)
+        public PaymentMethod? GetById(int id)
         {
-            return tracked
-                 ? _dbContext.PaymentMethods.FirstOrDefault(p => p.PaymentMethodID == id)
-                 : _dbContext.PaymentMethods.AsNoTracking().FirstOrDefault(p => p.PaymentMethodID == id);
+            return _dbContext.PaymentMethods.AsNoTracking().FirstOrDefault(p => p.PaymentMethodId == id);
         }
 
         public void SaveChanges()

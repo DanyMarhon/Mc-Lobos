@@ -17,6 +17,7 @@
             </ul>
 
             <form method="post" asp-action="Create">
+                @Html.AntiForgeryToken()
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                 <div class="mb-3">
@@ -34,7 +35,7 @@
                 <div class="form-check mb-4">
                     <input type="checkbox" asp-for="IsActive" class="form-check-input" />
                     <label class="form-check-label" asp-for="IsActive">
-                        Asset
+                        Is Active ?
                     </label>
                 </div>
 

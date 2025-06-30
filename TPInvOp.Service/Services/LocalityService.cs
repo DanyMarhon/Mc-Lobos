@@ -17,42 +17,75 @@ namespace TPInvOp.Service.Services
             _mapper = mapper;
         }
 
-        public bool Add(LocalityEditDto localityDto, out List<string> errors)
+        public bool Save(LocalityEditDto localityDto, out List<string> errors)
         {
             errors = new List<string>();
             Locality locality = _mapper.Map<Locality>(localityDto);
-            if (!_unitOfWork.Localities.Exist(locality.LocalityName))
+            if (locality.LocalityId == 0)
             {
-                _unitOfWork.Localities.Add(locality);
-                int rowsAffected = _unitOfWork.Complete();
-                return rowsAffected > 0;
+                if (!_unitOfWork.Localities.Exist(locality))
+                {
+                    _unitOfWork.Localities.Add(locality);
+                    int rowsAffected = _unitOfWork.Complete();
+                    return rowsAffected > 0;
+
+                }
+                else
+                {
+                    errors.Add("Locality Already Exist!!");
+                    return false;
+                }
+
             }
             else
             {
-                errors.Add("Locality Already Exist!!");
-                return false;
+                if (!_unitOfWork.Localities.Exist(locality))
+                {
+                    _unitOfWork.Localities.Update(locality);
+                    int rowsAffected = _unitOfWork.Complete();
+                    return rowsAffected > 0;
+
+                }
+                else
+                {
+                    errors.Add("Locality Already Exist!!");
+                    return false;
+                }
+
             }
         }
 
-        public void Delete(int localityId)
+        public bool Remove(int localityId, out List<string> errors)
         {
-            _unitOfWork.Localities.Delete(localityId);
+            errors = new List<string>();
+            var locality = _unitOfWork.Localities.GetById(localityId);
+            if (locality is null)
+            {
+                errors.Add("Locality does not exist");
+                return false;
+            }
+            _unitOfWork.Localities.Remove(localityId);
+            var rowsAffected = _unitOfWork.Complete();
+            return rowsAffected > 0;
         }
 
-        public bool Exist(string name, int? excludeId = null)
+        public bool Exist(Locality locality, int? excludeId = null)
         {
-            return _unitOfWork.Localities.Exist(name, excludeId);
+            return _unitOfWork.Localities.Exist(locality, excludeId);
         }
 
-        public IEnumerable<LocalityListDto> GetAll(string? sortedBy = null)
+        public IQueryable<LocalityListDto> GetAll()
         {
-            var localities = _unitOfWork.Localities.GetAll(sortedBy);
-            return _mapper.Map<List<LocalityListDto>>(localities);
+            var localityes = _unitOfWork.Localities.GetAll();
+            return _mapper.ProjectTo<LocalityListDto>(localityes);
         }
 
-        public Locality? LocalityById(int id, bool tracked = false)
+        public LocalityEditDto? LocalityById(int id)
         {
-            return _unitOfWork.Localities.GetById(id, tracked);
+            var locality = _unitOfWork.Localities.GetById(id);
+            if (locality is null) return null;
+            return _mapper.Map<LocalityEditDto>(locality);
         }
+
     }
 }

@@ -17,20 +17,20 @@ namespace TPInvOp.Service.Mappers
 
         private void LoadLocalityMapping()
         {
-            CreateMap<Locality, LocalityListDto>();
-            CreateMap<LocalityEditDto, Locality>();
+            CreateMap<Locality, LocalityListDto>().ReverseMap();
+            CreateMap<Locality, LocalityEditDto>().ReverseMap();
         }
 
         private void LoadCategoryMapping()
         {
-            CreateMap<Category, CategoryListDto>();
-            CreateMap<CategoryEditDto, Category>();
+            CreateMap<Category, CategoryListDto>().ReverseMap();
+            CreateMap<Category, CategoryEditDto>().ReverseMap();
         }
 
         private void LoadPaymentMethodMapping()
         {
-            CreateMap<PaymentMethod, PaymentMethodListDto>();
-            CreateMap<PaymentMethodEditDto, PaymentMethod>();
+            CreateMap<PaymentMethod, PaymentMethodListDto>().ReverseMap();
+            CreateMap<PaymentMethod, PaymentMethodEditDto>().ReverseMap();
         }
     }
 }

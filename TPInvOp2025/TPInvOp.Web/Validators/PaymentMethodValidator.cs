@@ -11,9 +11,6 @@ namespace TPInvOp.Web.Validators
                 .NotEmpty().WithMessage("The {PropertyName} is required")
                 .MinimumLength(3).WithMessage("Must have at least {MinLength} characters")
                 .MaximumLength(50).WithMessage("No more than {MaxLength} characters");
-
         }
-
-
     }
 }

@@ -4,12 +4,12 @@ namespace TPInvOp.Data.Interfaces
 {
     public interface IPaymentMethodRepository
     {
-        IEnumerable<PaymentMethod> GetAll();
-        PaymentMethod? GetById(int id, bool tracked = false);
+        IQueryable<PaymentMethod> GetAll();
+        PaymentMethod? GetById(int id);
         void Add(PaymentMethod paymentMethod);
-        bool Exist(string name, int? excludeId = null);
-        void Edit(PaymentMethod paymentMethod);
-        void Delete(int paymentMethodId);
+        bool Exist(PaymentMethod paymentMethod, int? excludeId = null);
+        void Update(PaymentMethod paymentMethod);
+        void Remove(int paymentMethodId);
         void SaveChanges();
     }
 }

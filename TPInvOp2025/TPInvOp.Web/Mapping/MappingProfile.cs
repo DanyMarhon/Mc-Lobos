@@ -19,19 +19,19 @@ namespace TPInvOp.Web.Mapping
 
         private void LoadLocalityMapping()
         {
-            CreateMap<LocalityListDto, LocalityListVm>();
-            CreateMap<LocalityEditVm, LocalityEditDto>();
+            CreateMap<LocalityListDto, LocalityListVm>().ReverseMap();
+            CreateMap<LocalityEditVm, LocalityEditDto>().ReverseMap();
         }
 
         private void LoadCategoryMapping()
         {
-            CreateMap<CategoryListDto, CategoryListVm>();
-            CreateMap<CategoryEditVm, CategoryEditDto>();
+            CreateMap<CategoryListDto, CategoryListVm>().ReverseMap();
+            CreateMap<CategoryEditVm, CategoryEditDto>().ReverseMap();
         }
         private void LoadPaymentMethodMapping()
         {
-            CreateMap<PaymentMethodListDto, PaymentMethodListVm>();
-            CreateMap<PaymentMethodEditVm, PaymentMethodEditDto>();
+            CreateMap<PaymentMethodListDto, PaymentMethodListVm>().ReverseMap();
+            CreateMap<PaymentMethodEditVm, PaymentMethodEditDto>().ReverseMap();
 
         }
     }

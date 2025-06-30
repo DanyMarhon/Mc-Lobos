@@ -4,12 +4,12 @@ namespace TPInvOp.Data.Interfaces
 {
     public interface ILocalityRepository
     {
-        IEnumerable<Locality> GetAll(string? sortedBy = null);
-        Locality? GetById(int id, bool tracked = false);
+        IQueryable<Locality> GetAll();
+        Locality? GetById(int id);
         void Add(Locality locality);
-        bool Exist(string name, int? excludeId = null);
-        void Edit(Locality locality);
-        void Delete(int localityId);
+        bool Exist(Locality locality, int? excludeId = null);
+        void Update(Locality locality);
+        void Remove(int localityId);
         void SaveChanges();
     }
 }

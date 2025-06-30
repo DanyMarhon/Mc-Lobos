@@ -8,5 +8,7 @@ namespace TPInvOp.Web.ViewModels.Category
         [DisplayName("Category")]
         public string CategoryName { get; set; } = null!;
         public string? Description { get; set; }
+        [DisplayName("Active")]
+        public bool IsActive { get; set; }
     }
 }

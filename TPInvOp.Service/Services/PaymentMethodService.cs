@@ -18,46 +18,73 @@ namespace TPInvOp.Service.Services
         }
 
 
-        public bool Add(PaymentMethodEditDto paymentMethodDto, out List<string> errors)
+        public bool Save(PaymentMethodEditDto paymentMethodDto, out List<string> errors)
         {
             errors = new List<string>();
-            PaymentMethod payment = _mapper.Map<PaymentMethod>(paymentMethodDto);
-            if (!_unitOfWork.PaymentMethod.Exist(payment.Name))
+            PaymentMethod paymentMethod = _mapper.Map<PaymentMethod>(paymentMethodDto);
+            if (paymentMethod.PaymentMethodId == 0)
             {
-                _unitOfWork.PaymentMethod.Add(payment);
-                int rowsAffected = _unitOfWork.Complete();
-                return rowsAffected > 0;
+                if (!_unitOfWork.PaymentMethod.Exist(paymentMethod))
+                {
+                    _unitOfWork.PaymentMethod.Add(paymentMethod);
+                    int rowsAffected = _unitOfWork.Complete();
+                    return rowsAffected > 0;
+                }
+                else
+                {
+                    errors.Add("Payment Method Already Exist!!");
+                    return false;
+                }
 
             }
             else
             {
-                errors.Add("Payment Method Already Exist!!");
+                if (!_unitOfWork.PaymentMethod.Exist(paymentMethod))
+                {
+                    _unitOfWork.PaymentMethod.Update(paymentMethod);
+                    int rowsAffected = _unitOfWork.Complete();
+                    return rowsAffected > 0;
+
+                }
+                else
+                {
+                    errors.Add("Payment Method Already Exist!!");
+                    return false;
+                }
+
+            }
+        }
+
+        public bool Exist(PaymentMethod paymentMethod, int? excludeId = null)
+        {
+            return _unitOfWork.PaymentMethod.Exist(paymentMethod, excludeId);
+        }
+
+        public PaymentMethodEditDto? PaymentMethodById(int id)
+        {
+            var paymentMethod = _unitOfWork.PaymentMethod.GetById(id);
+            if (paymentMethod is null) return null;
+            return _mapper.Map<PaymentMethodEditDto>(paymentMethod);
+        }
+
+        IQueryable<PaymentMethodListDto> IPaymentMethodService.GetAll()
+        {
+            var paymentMethods = _unitOfWork.PaymentMethod.GetAll();
+            return _mapper.ProjectTo<PaymentMethodListDto>(paymentMethods);
+        }
+
+        public bool Remove(int paymentMethodId, out List<string> errors)
+        {
+            errors = new List<string>();
+            var paymentMethod = _unitOfWork.PaymentMethod.GetById(paymentMethodId);
+            if (paymentMethod is null)
+            {
+                errors.Add("Payment Method does not exist");
                 return false;
             }
-
-
-
-        }
-
-        public bool Exist(string name, int? excludeId = null)
-        {
-            return _unitOfWork.PaymentMethod.Exist(name, excludeId);
-        }
-
-        public IEnumerable<PaymentMethodListDto> GetAll()
-        {
-            var payment = _unitOfWork.PaymentMethod.GetAll();
-            return _mapper.Map<List<PaymentMethodListDto>>(payment);
-        }
-
-        public PaymentMethod PaymentMethodGetById(int paymentMethodId, bool tracked = false)
-        {
-            return _unitOfWork.PaymentMethod.GetById(paymentMethodId, tracked);
-        }
-
-        public void Remove(int paymentMethodId)
-        {
-            _unitOfWork.PaymentMethod.Delete(paymentMethodId);
+            _unitOfWork.PaymentMethod.Remove(paymentMethodId);
+            var rowsAffected = _unitOfWork.Complete();
+            return rowsAffected > 0;
         }
     }
 }

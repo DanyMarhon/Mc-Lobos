@@ -17,43 +17,43 @@ namespace TPInvOp.Data.Repositories
             _dbContext.Localities.Add(locality);
         }
 
-        public void Delete(int localityId)
+        public void Remove(int localityId)
         {
-            var localityInDb = GetById(localityId, true);
-            if (localityInDb != null)
+            var localityInDb = GetById(localityId);
+            if (localityInDb is not null)
             {
-                _dbContext.Localities.Remove(localityInDb);
+                _dbContext.Entry(localityInDb).State = EntityState.Deleted;
             }
         }
 
-        public void Edit(Locality locality)
+        public void Update(Locality locality)
         {
-            var localityInDb = GetById(locality.LocalityId, true);
+            var localityInDb = GetById(locality.LocalityId);
             if (localityInDb != null)
             {
                 localityInDb.LocalityName = locality.LocalityName;
                 localityInDb.Delivery = locality.Delivery;
+
+                _dbContext.Entry(localityInDb).State = EntityState.Modified;
             }
         }
 
-        public bool Exist(string name, int? excludeId = null)
+        public bool Exist(Locality locality, int? excludeId = null)
         {
             return excludeId.HasValue
-                ? _dbContext.Localities.Any(l => l.LocalityName.ToUpper() == name.ToUpper()
+                ? _dbContext.Localities.Any(l => l.LocalityName.ToUpper() == locality.LocalityName.ToUpper()
                                 && l.LocalityId != excludeId)
-                : _dbContext.Localities.Any(l => l.LocalityName.ToUpper() == name.ToUpper());
+                : _dbContext.Localities.Any(l => l.LocalityName.ToUpper() == locality.LocalityName.ToUpper());
         }
 
-        public IEnumerable<Locality> GetAll(string? sortedBy = null)
+        public IQueryable<Locality> GetAll()
         {
-            return _dbContext.Localities.ToList();
+            return (IQueryable<Locality>)_dbContext.Localities.AsNoTracking();
         }
 
-        public Locality? GetById(int id, bool tracked = false)
+        public Locality? GetById(int id)
         {
-            return tracked
-                ? _dbContext.Localities.FirstOrDefault(l => l.LocalityId == id)
-                : _dbContext.Localities.AsNoTracking().FirstOrDefault(l => l.LocalityId == id);
+            return _dbContext.Localities.AsNoTracking().FirstOrDefault(l => l.LocalityId == id);
         }
 
         public void SaveChanges()

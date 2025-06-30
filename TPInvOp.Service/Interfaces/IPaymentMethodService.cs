@@ -5,10 +5,10 @@ namespace TPInvOp.Service.Interfaces
 {
     public interface IPaymentMethodService
     {
-        IEnumerable<PaymentMethodListDto> GetAll();
-        bool Add(PaymentMethodEditDto paymentMethodDto, out List<string> errors);
-        void Remove(int paymentMethodId);
-        bool Exist(string name, int? excludeId = null);
-        PaymentMethod PaymentMethodGetById(int paymentMethodId, bool tracked = false);
+        IQueryable<PaymentMethodListDto> GetAll();
+        bool Save(PaymentMethodEditDto paymentMethodDto, out List<string> errors);
+        bool Remove(int paymentMethodId, out List<string> errors);
+        bool Exist(PaymentMethod paymentMethod, int? excludeId = null);
+        PaymentMethodEditDto? PaymentMethodById(int id);
     }
 }

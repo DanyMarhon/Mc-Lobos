@@ -29,6 +29,7 @@
                 <thead class="table-light">
                     <tr>
                         <th>Name</th>
+                        <th>Is Active</th>
                         <th class="text-end">Actions</th>
                     </tr>
                 </thead>
@@ -45,13 +46,25 @@
                                     <i class="bi bi-trash"></i> Delete
                                 </a>
                             </td> *@
+                            <td>
+                                @if (category.IsActive)
+                                {
+                                    <span class="badge bg-success">Yes</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">No</span>
+                                }
+                            </td>
                             <td class="text-end">
-                                <button type="button" class="btn btn-sm btn-outline-warning me-1" data-bs-toggle="modal" data-bs-target="#unavailableModal">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#unavailableModal">
-                                    <i class="bi bi-trash"></i> Delete
-                                </button>
+                                <a class="btn btn-sm btn-outline-warning me-1" asp-controller="Categories" asp-action="Edit" asp-route-id="@category.CategoryId">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </a>
+                                <a class="btn btn-sm btn-outline-danger" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.CategoryId">
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </a>
                             </td>
 
                         </tr>
@@ -60,7 +73,10 @@
             </table>
         }
     </div>
-</div>
+</div>@* 
+
+                                    --El cartel de Joaco--
+
 <div class="modal fade" id="unavailableModal" tabindex="-1" aria-labelledby="unavailableModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow">
@@ -80,7 +96,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 
 
 

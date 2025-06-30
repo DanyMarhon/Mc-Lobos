@@ -4,12 +4,12 @@ namespace TPInvOp.Data.Interfaces
 {
     public interface ICategoryRepository
     {
-        IEnumerable<Category> GetAll(string? sortedBy = null);
-        Category? GetById(int id, bool tracked = false);
+        IQueryable<Category> GetAll();
+        Category? GetById(int id);
         void Add(Category category);
-        bool Exist(string name, int? excludeId = null);
-        void Edit(Category category);
-        void Delete(int categoryId);
+        bool Exist(Category category, int? excludeId = null);
+        void Update(Category category);
+        void Remove(int categoryId);
         void SaveChanges();
     }
 }

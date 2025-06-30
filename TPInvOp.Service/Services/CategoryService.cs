@@ -17,48 +17,75 @@ namespace TPInvOp.Service.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<CategoryListDto> GetAll()
-        {
-            var categories = _unitOfWork.Categories.GetAll();
-            return _mapper.Map<List<CategoryListDto>>(categories);
-        }
-
-        public bool Add(CategoryEditDto categoryDto, out List<string> errors)
+        public bool Save(CategoryEditDto categoryDto, out List<string> errors)
         {
             errors = new List<string>();
             Category category = _mapper.Map<Category>(categoryDto);
-            if (!_unitOfWork.Categories.Exist(category.CategoryName))
+            if (category.CategoryId == 0)
             {
-                int rowsAffected = _unitOfWork.Complete();
-                return rowsAffected > 0;
+                if (!_unitOfWork.Categories.Exist(category))
+                {
+                    _unitOfWork.Categories.Add(category);
+                    int rowsAffected = _unitOfWork.Complete();
+                    return rowsAffected > 0;
+
+                }
+                else
+                {
+                    errors.Add("Category Already Exist!!");
+                    return false;
+                }
+
             }
             else
             {
-                errors.Add("Category Already Exist!!");
-                return false;
+                if (!_unitOfWork.Categories.Exist(category))
+                {
+                    _unitOfWork.Categories.Update(category);
+                    int rowsAffected = _unitOfWork.Complete();
+                    return rowsAffected > 0;
+
+                }
+                else
+                {
+                    errors.Add("Category Already Exist!!");
+                    return false;
+                }
+
             }
         }
 
-        public Category? CategoryById(int id, bool tracked = false)
+        public CategoryEditDto? CategoryById(int id)
         {
-            return _unitOfWork.Categories.GetById(id, tracked);
+            var category = _unitOfWork.Categories.GetById(id);
+            if (category is null) return null;
+            return _mapper.Map<CategoryEditDto>(category);
         }
 
 
-        public void Delete(int categoryId)
+        public bool Remove(int categoryId, out List<string> errors)
         {
-            _unitOfWork.Categories.Delete(categoryId);
+            errors = new List<string>();
+            var category = _unitOfWork.Categories.GetById(categoryId);
+            if (category is null)
+            {
+                errors.Add("Category does not exist");
+                return false;
+            }
+            _unitOfWork.Categories.Remove(categoryId);
+            var rowsAffected = _unitOfWork.Complete();
+            return rowsAffected > 0;
         }
 
-        public bool Exist(string name, int? excludeId = null)
+        public bool Exist(Category category, int? excludeId = null)
         {
-            return _unitOfWork.Categories.Exist(name, excludeId);
+            return _unitOfWork.Categories.Exist(category, excludeId);
         }
 
-        public IEnumerable<CategoryListDto> GetAll(string? sortedBy = null)
+        public IQueryable<CategoryListDto> GetAll()
         {
-            var categories = _unitOfWork.Categories.GetAll(sortedBy);
-            return _mapper.Map<List<CategoryListDto>>(categories);
+            var categories = _unitOfWork.Categories.GetAll();
+            return _mapper.ProjectTo<CategoryListDto>(categories);
         }
     }
 }
