@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Service.Interfaces;
 using TPInvOp.Web.ViewModels.Category;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace TPInvOp.Web.Controllers
 {
@@ -16,11 +18,23 @@ namespace TPInvOp.Web.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? page, int? pageSize)
         {
+            int pageNumber = page ?? 1;
+            int registerPerPage = pageSize ?? 8;
+
             var categoriesDto = _categoryService.GetAll();
-            var categoriesVm = _mapper.Map<List<CategoryListVm>>(categoriesDto);
-            return View(categoriesVm);
+            var pagedListDto = categoriesDto.ToPagedList(pageNumber, registerPerPage);
+            var viewModelList = _mapper.Map<List<CategoryListVm>>(pagedListDto);
+
+            var viewModelPagedList = new StaticPagedList<CategoryListVm>
+                (
+                    viewModelList,
+                    pagedListDto.PageNumber,
+                    pagedListDto.PageSize,
+                    pagedListDto.TotalItemCount
+                );
+            return View(viewModelPagedList);
         }
 
         public IActionResult Create()

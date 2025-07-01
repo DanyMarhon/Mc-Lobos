@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Service.Interfaces;
+using TPInvOp.Web.ViewModels.Category;
 using TPInvOp.Web.ViewModels.Locality;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace TPInvOp.Web.Controllers
 {
@@ -16,11 +19,23 @@ namespace TPInvOp.Web.Controllers
             _localityService = localityService;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page, int? pageSize)
         {
+            int pageNumber = page ?? 1;
+            int registerPerPage = pageSize ?? 8;
+
             var localitiesDto = _localityService.GetAll();
-            var localitiesVm = _mapper.Map<List<LocalityListVm>>(localitiesDto);
-            return View(localitiesVm);
+            var pagedListDto = localitiesDto.ToPagedList(pageNumber, registerPerPage);
+            var viewModelList = _mapper.Map<List<LocalityListVm>>(pagedListDto);
+
+            var viewModelPagedList = new StaticPagedList<LocalityListVm>
+                (
+                    viewModelList,
+                    pagedListDto.PageNumber,
+                    pagedListDto.PageSize,
+                    pagedListDto.TotalItemCount
+                );
+            return View(viewModelPagedList);
         }
 
         public IActionResult Create()

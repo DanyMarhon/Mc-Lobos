@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LocalityListVm>
+﻿@model X.PagedList.IPagedList<LocalityListVm>
 @*//Al agregar una new cat. si el teamdata es distinto
     de null muestra el mensaje que lo pudo agregar*@
 @if (TempData.Count > 0)
@@ -63,6 +63,29 @@
                     }
                 </tbody>
             </table>
+            @Html.PagedListPager(
+            Model,
+                page => Url.Action("Index", new { page }),
+                new PagedListRenderOptions
+                {
+                    LiElementClasses = new[] { "page-item" },
+                    PageClasses = new[] { "page-link" },
+                    UlElementClasses = new[] { "pagination", "justify-content-center" },
+
+                    LinkToFirstPageFormat = "<i class='bi bi-chevron-double-left'></i>",
+                    LinkToPreviousPageFormat = "<i class='bi bi-chevron-left'></i>",
+                    LinkToNextPageFormat = "<i class='bi bi-chevron-right'></i>",
+                    LinkToLastPageFormat = "<i class='bi bi-chevron-double-right'></i>",
+
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+
+                    DisplayLinkToIndividualPages = true,
+                    MaximumPageNumbersToDisplay = 5
+                }
+                )
         }
     </div>
 </div>
