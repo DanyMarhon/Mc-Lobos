@@ -1,6 +1,11 @@
-﻿.nav-link:hover {
-    zoom: 1.1;
-    background-color: #f0f0f0;
-    color: #007bff;
-    transition: background-color 0.3s, color 0.3s;
+﻿.nav-link {
+    border-radius: 30px;
+    background-color: transparent;
+    transition: background-color 0.5s, color 0.5s, transform 0.3s;
+}
+
+.nav-link:hover {
+        background-color: #8a8787;
+        color: #007bff;
+        transform: scale(1.05);
 }
