@@ -4,40 +4,14 @@ using TPInvOp.Model.Entities;
 
 namespace TPInvOp.Data.Repositories
 {
-    public class LocalityRepository : ILocalityRepository
+    public class LocalityRepository : GenericRepository<Locality>, ILocalityRepository
     {
         public readonly AppDbContext _dbContext;
 
-        public LocalityRepository(AppDbContext dbContext)
+        public LocalityRepository(AppDbContext dbContext):base(dbContext)
         {
             _dbContext = dbContext;
         }
-        public void Add(Locality locality)
-        {
-            _dbContext.Localities.Add(locality);
-        }
-
-        public void Remove(int localityId)
-        {
-            var localityInDb = GetById(localityId);
-            if (localityInDb is not null)
-            {
-                _dbContext.Entry(localityInDb).State = EntityState.Deleted;
-            }
-        }
-
-        public void Update(Locality locality)
-        {
-            var localityInDb = GetById(locality.LocalityId);
-            if (localityInDb != null)
-            {
-                localityInDb.LocalityName = locality.LocalityName;
-                localityInDb.Delivery = locality.Delivery;
-
-                _dbContext.Entry(localityInDb).State = EntityState.Modified;
-            }
-        }
-
         public bool Exist(Locality locality, int? excludeId = null)
         {
             return excludeId.HasValue
@@ -45,20 +19,17 @@ namespace TPInvOp.Data.Repositories
                                 && l.LocalityId != excludeId)
                 : _dbContext.Localities.Any(l => l.LocalityName.ToUpper() == locality.LocalityName.ToUpper());
         }
-
-        public IQueryable<Locality> GetAll()
+        public void Update(Locality locality)
         {
-            return (IQueryable<Locality>)_dbContext.Localities.AsNoTracking();
-        }
+            var localityInDb = Get(filter: l => l.LocalityId == locality.LocalityId,
+                tracked: true);
+            if (localityInDb != null)
+            {
+                localityInDb.LocalityName = locality.LocalityName;
+                localityInDb.Delivery = locality.Delivery;
 
-        public Locality? GetById(int id)
-        {
-            return _dbContext.Localities.AsNoTracking().FirstOrDefault(l => l.LocalityId == id);
-        }
-
-        public void SaveChanges()
-        {
-            _dbContext.SaveChanges();
+                _dbContext.Entry(localityInDb).State = EntityState.Modified;
+            }
         }
     }
 }

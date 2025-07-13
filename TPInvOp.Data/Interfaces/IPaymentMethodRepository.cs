@@ -2,15 +2,10 @@
 
 namespace TPInvOp.Data.Interfaces
 {
-    public interface IPaymentMethodRepository
+    public interface IPaymentMethodRepository : IGenericRepository<PaymentMethod>
     {
-        IQueryable<PaymentMethod> GetAll();
-        PaymentMethod? GetById(int id);
-        void Add(PaymentMethod paymentMethod);
         bool Exist(PaymentMethod paymentMethod, int? excludeId = null);
         void Update(PaymentMethod paymentMethod);
-        void Remove(int paymentMethodId);
-        void SaveChanges();
     }
 }
 

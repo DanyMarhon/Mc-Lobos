@@ -17,6 +17,24 @@ namespace TPInvOp.Service.Services
             _mapper = mapper;
         }
 
+        IQueryable<PaymentMethodListDto> IPaymentMethodService.GetAll()
+        {
+            var paymentMethods = _unitOfWork.PaymentMethod.GetAll();
+            return _mapper.ProjectTo<PaymentMethodListDto>(paymentMethods);
+        }
+
+        public PaymentMethodEditDto? PaymentMethodById(int id)
+        {
+            var paymentMethod = _unitOfWork.PaymentMethod.Get(filter: p => p.PaymentMethodId == id,
+                tracked: true);
+            if (paymentMethod is null) return null;
+            return _mapper.Map<PaymentMethodEditDto>(paymentMethod);
+        }
+
+        public bool Exist(PaymentMethod paymentMethod, int? excludeId = null)
+        {
+            return _unitOfWork.PaymentMethod.Exist(paymentMethod, excludeId);
+        }
 
         public bool Save(PaymentMethodEditDto paymentMethodDto, out List<string> errors)
         {
@@ -55,34 +73,17 @@ namespace TPInvOp.Service.Services
             }
         }
 
-        public bool Exist(PaymentMethod paymentMethod, int? excludeId = null)
-        {
-            return _unitOfWork.PaymentMethod.Exist(paymentMethod, excludeId);
-        }
-
-        public PaymentMethodEditDto? PaymentMethodById(int id)
-        {
-            var paymentMethod = _unitOfWork.PaymentMethod.GetById(id);
-            if (paymentMethod is null) return null;
-            return _mapper.Map<PaymentMethodEditDto>(paymentMethod);
-        }
-
-        IQueryable<PaymentMethodListDto> IPaymentMethodService.GetAll()
-        {
-            var paymentMethods = _unitOfWork.PaymentMethod.GetAll();
-            return _mapper.ProjectTo<PaymentMethodListDto>(paymentMethods);
-        }
-
         public bool Remove(int paymentMethodId, out List<string> errors)
         {
             errors = new List<string>();
-            var paymentMethod = _unitOfWork.PaymentMethod.GetById(paymentMethodId);
+            var paymentMethod = _unitOfWork.PaymentMethod.Get(filter:p=>p.PaymentMethodId==paymentMethodId,
+                tracked: true);
             if (paymentMethod is null)
             {
                 errors.Add("Payment Method does not exist");
                 return false;
             }
-            _unitOfWork.PaymentMethod.Remove(paymentMethodId);
+            _unitOfWork.PaymentMethod.Remove(paymentMethod);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
         }
