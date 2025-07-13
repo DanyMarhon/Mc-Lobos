@@ -8,7 +8,7 @@ namespace TPInvOp.Data.Repositories
     {
         public readonly AppDbContext _dbContext;
 
-        public PaymentMethodRepository(AppDbContext dbContext):base(dbContext)
+        public PaymentMethodRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
@@ -22,8 +22,8 @@ namespace TPInvOp.Data.Repositories
         }
         public void Update(PaymentMethod paymentMethod)
         {
-            var paymentMehodInDb = Get(filter:p=>p.PaymentMethodId == paymentMethod.PaymentMethodId,
-                tracked:true);
+            var paymentMehodInDb = Get(filter: p => p.PaymentMethodId == paymentMethod.PaymentMethodId,
+                tracked: true);
             if (paymentMehodInDb != null)
             {
                 paymentMehodInDb.Name = paymentMethod.Name;

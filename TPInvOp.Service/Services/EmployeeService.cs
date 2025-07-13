@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPInvOp.Data;
 using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.Employee;
@@ -11,7 +6,7 @@ using TPInvOp.Service.Interfaces;
 
 namespace TPInvOp.Service.Services
 {
-    public class EmployeeService: IEmployeeService
+    public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -82,7 +77,7 @@ namespace TPInvOp.Service.Services
         public bool Remove(int employeeId, out List<string> errors)
         {
             errors = new List<string>();
-            var employee = _unitOfWork.Employee.Get(filter:l=>l.EmployeeID == employeeId,
+            var employee = _unitOfWork.Employee.Get(filter: l => l.EmployeeID == employeeId,
                 tracked: true);
             if (employee is null)
             {

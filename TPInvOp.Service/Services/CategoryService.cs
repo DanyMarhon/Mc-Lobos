@@ -75,7 +75,7 @@ namespace TPInvOp.Service.Services
         public bool Remove(int categoryId, out List<string> errors)
         {
             errors = new List<string>();
-            var category = _unitOfWork.Categories.Get(filter:c=>c.CategoryId == categoryId,
+            var category = _unitOfWork.Categories.Get(filter: c => c.CategoryId == categoryId,
                 tracked: true);
             if (category is null)
             {

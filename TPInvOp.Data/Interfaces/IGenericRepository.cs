@@ -15,6 +15,6 @@ namespace TPInvOp.Data.Interfaces
 
         void Add(T entity);
 
-        void Remove(T entity);  
+        void Remove(T entity);
     }
 }

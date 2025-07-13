@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPInvOp.Data.Interfaces;
 using TPInvOp.Model.Entities;
 
@@ -32,7 +27,7 @@ namespace TPInvOp.Data.Repositories
             {
                 employeeInDb.EmployeeName = employee.EmployeeName;
                 employeeInDb.Position = employee.Position;
-                
+
 
                 _dbContext.Entry(employeeInDb).State = EntityState.Modified;
             }

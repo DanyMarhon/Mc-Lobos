@@ -46,10 +46,16 @@
                                     <i class="bi bi-pencil-square"></i>
                                     Edit
                                 </a>
-                                <a class="btn btn-sm btn-outline-danger" asp-controller="PaymentMethod" asp-action="Delete" asp-route-id="@paymentMethod.PaymentMethodId">
+                                <button type="button" class="btn btn-danger" onclick="confirmarBaja(@paymentMethod.PaymentMethodId, '@paymentMethod.Name', '@typeof(PaymentMethod).Name')">
                                     <i class="bi bi-trash"></i>
                                     Delete
-                                </a>
+                                </button>
+
+                                <!--Formulario oculto para submit post-->
+                                <form id="formDelete-@paymentMethod.PaymentMethodId" method="post" asp-action="Delete" style="display: none;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@paymentMethod.PaymentMethodId" />
+                                </form>
                             </td>
                         </tr>
                     }

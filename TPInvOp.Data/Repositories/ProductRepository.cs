@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPInvOp.Data.Interfaces;
 using TPInvOp.Model.Entities;
 
@@ -26,7 +21,7 @@ namespace TPInvOp.Data.Repositories
         }
         public void Update(Product product)
         {
-            var productInDb = Get(filter: p=> p.ProductID == product.ProductID,
+            var productInDb = Get(filter: p => p.ProductID == product.ProductID,
                 tracked: true);
             if (productInDb != null)
             {

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Service.Interfaces;
-using TPInvOp.Web.ViewModels.Category;
 using TPInvOp.Web.ViewModels.Locality;
 using X.PagedList;
 using X.PagedList.Extensions;

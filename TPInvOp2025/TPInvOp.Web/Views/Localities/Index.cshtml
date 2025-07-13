@@ -44,10 +44,16 @@
                                     <i class="bi bi-pencil-square"></i>
                                     Edit
                                 </a>
-                                <a class="btn btn-sm btn-outline-danger" asp-controller="Localities" asp-action="Delete" asp-route-id="@locality.LocalityId">
+                                <button type="button" class="btn btn-danger" onclick="confirmarBaja(@locality.LocalityId, '@locality.LocalityName', '@typeof(Locality).Name')">
                                     <i class="bi bi-trash"></i>
                                     Delete
-                                </a>
+                                </button>
+
+                                <!--Formulario oculto para submit post-->
+                                <form id="formDelete-@locality.LocalityId" method="post" asp-action="Delete" style="display: none;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@locality.LocalityId" />
+                                </form>
                             </td>
 
                         </tr>

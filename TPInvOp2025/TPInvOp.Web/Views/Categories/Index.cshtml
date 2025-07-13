@@ -52,10 +52,16 @@
                                     <i class="bi bi-pencil-square"></i>
                                     Edit
                                 </a>
-                                <a class="btn btn-sm btn-outline-danger" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.CategoryId">
+                                <button type="button" class="btn btn-danger" onclick="confirmarBaja(@category.CategoryId, '@category.CategoryName', '@typeof(Category).Name')">
                                     <i class="bi bi-trash"></i>
                                     Delete
-                                </a>
+                                </button>
+
+                                <!--Formulario oculto para submit post-->
+                                <form id="formDelete-@category.CategoryId" method="post" asp-action="Delete" style="display: none;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@category.CategoryId" />
+                                </form>
                             </td>
 
                         </tr>
@@ -87,7 +93,11 @@
             )
         }
     </div>
-</div>@* 
+</div>
+@*
+
+
+
 
                                     --El cartel de Joaco--
 

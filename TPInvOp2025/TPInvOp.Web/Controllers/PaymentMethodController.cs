@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.PaymentMethod;
 using TPInvOp.Service.Interfaces;
-using TPInvOp.Service.Services;
-using TPInvOp.Web.ViewModels.Category;
 using TPInvOp.Web.ViewModels.PaymentMethod;
 using X.PagedList;
 using X.PagedList.Extensions;

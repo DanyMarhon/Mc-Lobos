@@ -24,7 +24,7 @@ namespace TPInvOp.Ioc
 
             //PaymentMethod 
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
-            
+
             //Product
             services.AddScoped<IProductService, ProductService>();
 

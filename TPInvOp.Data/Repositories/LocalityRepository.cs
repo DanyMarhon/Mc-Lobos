@@ -8,7 +8,7 @@ namespace TPInvOp.Data.Repositories
     {
         public readonly AppDbContext _dbContext;
 
-        public LocalityRepository(AppDbContext dbContext):base(dbContext)
+        public LocalityRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }

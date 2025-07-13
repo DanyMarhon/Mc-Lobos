@@ -76,7 +76,7 @@ namespace TPInvOp.Service.Services
         public bool Remove(int paymentMethodId, out List<string> errors)
         {
             errors = new List<string>();
-            var paymentMethod = _unitOfWork.PaymentMethod.Get(filter:p=>p.PaymentMethodId==paymentMethodId,
+            var paymentMethod = _unitOfWork.PaymentMethod.Get(filter: p => p.PaymentMethodId == paymentMethodId,
                 tracked: true);
             if (paymentMethod is null)
             {

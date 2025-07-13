@@ -42,24 +42,24 @@ namespace TPInvOp.Data.Repositories
             return query.AsNoTracking().FirstOrDefault();
         }
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>>? filter = null, 
-            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, 
+        public IQueryable<T> GetAll(Expression<Func<T, bool>>? filter = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
             string? propertiesNames = null)
         {
             IQueryable<T> query = _dbSet.AsQueryable();
-            if(filter is not null)
+            if (filter is not null)
             {
                 query = query.Where(filter);
             }
-            if(propertiesNames is not null)//las properties me permiten hacer el include
+            if (propertiesNames is not null)//las properties me permiten hacer el include
             {
-                foreach(var propertyInclude in propertiesNames
+                foreach (var propertyInclude in propertiesNames
                     .Split(",", StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(propertyInclude);
                 }
             }
-            if(orderBy is not null)
+            if (orderBy is not null)
             {
                 query = orderBy(query);
             }

@@ -1,6 +1,5 @@
 ﻿using TPInvOp.Data.Interfaces;
 using TPInvOp.Data.Repositories;
-using TPInvOp.Model.Entities;
 
 namespace TPInvOp.Data
 {
@@ -30,7 +29,7 @@ namespace TPInvOp.Data
 
         public ICustomerRepository Customer
         { get { _customer ??= new CustomerRepository(_dbContext); return _customer; } }
-        public IProductRepository Products 
+        public IProductRepository Products
         { get { _product ??= new ProductRepository(_dbContext); return _product; } }
         public IEmployeeRepository Employee
         { get { _employee ??= new EmployeeRepository(_dbContext); return _employee; } }

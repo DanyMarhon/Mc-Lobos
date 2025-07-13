@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TPInvOp.Data.Interfaces;
+﻿using TPInvOp.Data.Interfaces;
 using TPInvOp.Model.Entities;
 
 namespace TPInvOp.Data.Repositories
@@ -8,7 +7,7 @@ namespace TPInvOp.Data.Repositories
     {
         public readonly AppDbContext _dbContext;
 
-        public CategoryRepository(AppDbContext dbContext):base(dbContext)
+        public CategoryRepository(AppDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
@@ -25,7 +24,7 @@ namespace TPInvOp.Data.Repositories
 
         public void Update(Category category)
         {
-            var categoryInDb = Get(filter:c => c.CategoryId == category.CategoryId,
+            var categoryInDb = Get(filter: c => c.CategoryId == category.CategoryId,
                 tracked: true);
             if (categoryInDb != null)
             {

@@ -77,7 +77,7 @@ namespace TPInvOp.Service.Services
         public bool Remove(int localityId, out List<string> errors)
         {
             errors = new List<string>();
-            var locality = _unitOfWork.Localities.Get(filter:l=>l.LocalityId == localityId,
+            var locality = _unitOfWork.Localities.Get(filter: l => l.LocalityId == localityId,
                 tracked: true);
             if (locality is null)
             {
