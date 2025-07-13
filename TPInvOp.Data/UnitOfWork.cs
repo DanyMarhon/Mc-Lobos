@@ -1,5 +1,6 @@
 ﻿using TPInvOp.Data.Interfaces;
 using TPInvOp.Data.Repositories;
+using TPInvOp.Model.Entities;
 
 namespace TPInvOp.Data
 {
@@ -9,6 +10,9 @@ namespace TPInvOp.Data
         private ICategoryRepository _categories;
         private ILocalityRepository _localities;
         private IPaymentMethodRepository _paymentMethod;
+        private IProductRepository _product;
+        private ICustomerRepository _customer;
+        private EmployeeRepository _employee;
         public UnitOfWork(AppDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -23,6 +27,13 @@ namespace TPInvOp.Data
 
         public IPaymentMethodRepository PaymentMethod
         { get { _paymentMethod ??= new PaymentMethodRepository(_dbContext); return _paymentMethod; } }
+
+        public ICustomerRepository Customer
+        { get { _customer ??= new CustomerRepository(_dbContext); return _customer; } }
+        public IProductRepository Products 
+        { get { _product ??= new ProductRepository(_dbContext); return _product; } }
+        public IEmployeeRepository Employee
+        { get { _employee ??= new EmployeeRepository(_dbContext); return _employee; } }
 
         public int Complete()
         {

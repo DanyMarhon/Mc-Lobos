@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using TPInvOp.Model.Entities;
 using TPInvOp.Service.DTOs.Category;
+using TPInvOp.Service.DTOs.Customer;
+using TPInvOp.Service.DTOs.Employee;
 using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Service.DTOs.PaymentMethod;
+using TPInvOp.Service.DTOs.Product;
 
 namespace TPInvOp.Service.Mappers
 {
@@ -13,6 +16,9 @@ namespace TPInvOp.Service.Mappers
             LoadCategoryMapping();
             LoadLocalityMapping();
             LoadPaymentMethodMapping();
+            LoadEmployeeMapping();
+            LoadCustomerMapping();
+            LoadProductMapping();
         }
 
         private void LoadLocalityMapping()
@@ -31,6 +37,21 @@ namespace TPInvOp.Service.Mappers
         {
             CreateMap<PaymentMethod, PaymentMethodListDto>().ReverseMap();
             CreateMap<PaymentMethod, PaymentMethodEditDto>().ReverseMap();
+        }
+        private void LoadEmployeeMapping()
+        {
+            CreateMap<Employee, EmployeeListDto>().ReverseMap();
+            CreateMap<Employee, EmployeeEditDto>().ReverseMap();
+        }
+        private void LoadCustomerMapping()
+        {
+            CreateMap<Customer, CustomerListDto>().ReverseMap();
+            CreateMap<Customer, CustomerEditDto>().ReverseMap();
+        }
+        private void LoadProductMapping()
+        {
+            CreateMap<Product, ProductListDto>().ReverseMap();
+            CreateMap<Product, ProductEditDto>().ReverseMap();
         }
     }
 }

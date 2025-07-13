@@ -24,6 +24,15 @@ namespace TPInvOp.Ioc
 
             //PaymentMethod 
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+            
+            //Product
+            services.AddScoped<IProductService, ProductService>();
+
+            //Employee
+            services.AddScoped<IEmployeeService, EmployeeService>();
+
+            //Customer
+            services.AddScoped<ICustomerService, CustomerService>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             // Los repos de acá volaron porque ahora se instancian desde el UnitOfWork -Dany
