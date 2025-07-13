@@ -1,0 +1,83 @@
+﻿@model X.PagedList.IPagedList<CustomerListVm>
+
+    <div class="card shadow rounded mt-4 mb-5">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Customer List</h4>
+            <a class="btn btn-light text-primary fw-bold" asp-controller="Customer" asp-action="Upsert">
+                <i class="bi bi-plus-circle me-1"></i> New Customer
+            </a>
+        </div>
+        <div class="card-body p-0">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-warning m-3">
+                    <p>There are no registered customer</p>
+                </div>
+            }
+            else
+            {
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact Phone</th>
+                            <th>Delivery Addres</th>
+                            <th>Locality</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.CustomerName</td>
+                                <td>@item.ContactPhone</td>
+                                <td>@item.DeliveryAddress</td>
+                                <td>@item.LocalityName</td>
+                                <td class="text-end">
+                                    <a class="btn btn-sm btn-outline-warning me-1" asp-controller="Customer" asp-action="Upsert" asp-route-id="@item.CustomerId">
+                                        <i class="bi bi-pencil-square"></i>
+                                        Edit
+                                    </a>
+                                    <button type="button" class="btn btn-danger" onclick="confirmarBaja(@item.CustomerId, '@item.CustomerName', '@typeof(Customer).Name')">
+                                        <i class="bi bi-trash"></i>
+                                        Delete
+                                    </button>
+
+                                    <!--Formulario oculto para submit post-->
+                                    <form id="formDelete-@item.CustomerId" method="post" asp-action="Delete" style="display: none;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@item.CustomerId" />
+                                    </form>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+			@Html.PagedListPager(
+			Model,
+				page => Url.Action("Index", new { page }),
+				new PagedListRenderOptions
+				{
+					LiElementClasses = new[] { "page-item" },
+					PageClasses = new[] { "page-link" },
+					UlElementClasses = new[] { "pagination", "justify-content-center" },
+
+					LinkToFirstPageFormat = "<i class='bi bi-chevron-double-left'></i>",
+					LinkToPreviousPageFormat = "<i class='bi bi-chevron-left'></i>",
+					LinkToNextPageFormat = "<i class='bi bi-chevron-right'></i>",
+					LinkToLastPageFormat = "<i class='bi bi-chevron-double-right'></i>",
+
+					DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+					DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+					DisplayLinkToNextPage = PagedListDisplayMode.Always,
+					DisplayLinkToLastPage = PagedListDisplayMode.Always,
+
+					DisplayLinkToIndividualPages = true,
+					MaximumPageNumbersToDisplay = 5
+				}
+				)
+            }
+        </div>
+    </div>

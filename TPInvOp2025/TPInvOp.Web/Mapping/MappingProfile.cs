@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using TPInvOp.Service.DTOs.Category;
+using TPInvOp.Service.DTOs.Customer;
 using TPInvOp.Service.DTOs.Locality;
 using TPInvOp.Service.DTOs.PaymentMethod;
 using TPInvOp.Web.ViewModels.Category;
+using TPInvOp.Web.ViewModels.Customer;
 using TPInvOp.Web.ViewModels.Locality;
 using TPInvOp.Web.ViewModels.PaymentMethod;
 
@@ -15,6 +17,7 @@ namespace TPInvOp.Web.Mapping
             LoadCategoryMapping();
             LoadLocalityMapping();
             LoadPaymentMethodMapping();
+            LoadCustomerMapping();
         }
 
         private void LoadLocalityMapping()
@@ -33,6 +36,13 @@ namespace TPInvOp.Web.Mapping
             CreateMap<PaymentMethodListDto, PaymentMethodListVm>().ReverseMap();
             CreateMap<PaymentMethodEditVm, PaymentMethodEditDto>().ReverseMap();
 
+        }
+
+        private void LoadCustomerMapping()
+        {
+            CreateMap<CustomerListDto, CustomerListVm>().ReverseMap();
+            CreateMap<CustomerEditDto, CustomerEditVm>().ReverseMap();
+            CreateMap<CustomerEditDto, CustomerListVm>();
         }
     }
 }

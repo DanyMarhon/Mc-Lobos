@@ -7,5 +7,6 @@
         public string? ContactPhone { get; set; }
         public string? DeliveryAddress { get; set; }
         public int LocalityID { get; set; }
+        public Locality? Locality { get; set; }
     }
 }

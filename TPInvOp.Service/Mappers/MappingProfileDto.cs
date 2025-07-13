@@ -45,7 +45,8 @@ namespace TPInvOp.Service.Mappers
         }
         private void LoadCustomerMapping()
         {
-            CreateMap<Customer, CustomerListDto>().ReverseMap();
+            CreateMap<Customer, CustomerListDto>()
+                .ForMember(dest => dest.LocalityName, opt => opt.MapFrom(src => src.Locality!.LocalityName));
             CreateMap<Customer, CustomerEditDto>().ReverseMap();
         }
         private void LoadProductMapping()
