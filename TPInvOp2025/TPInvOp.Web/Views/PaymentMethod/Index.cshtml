@@ -5,7 +5,7 @@
 <div class="card shadow rounded mt-4">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
         <h4 class="mb-0">Payment Method List</h4>
-        <a class="btn btn-light text-primary fw-bold" asp-controller="PaymentMethod" asp-action="Create">
+        <a class="btn btn-light text-primary fw-bold" asp-controller="PaymentMethod" asp-action="Upsert">
             <i class="bi bi-plus-circle me-1"></i> New Method
         </a>
     </div>
@@ -42,7 +42,7 @@
                                 }
                             </td>
                             <td class="text-end">
-                                <a class="btn btn-sm btn-outline-warning me-1" asp-controller="PaymentMethod" asp-action="Edit" asp-route-id="@paymentMethod.PaymentMethodId">
+                                <a class="btn btn-sm btn-outline-warning me-1" asp-controller="PaymentMethod" asp-action="Upsert" asp-route-id="@paymentMethod.PaymentMethodId">
                                     <i class="bi bi-pencil-square"></i>
                                     Edit
                                 </a>

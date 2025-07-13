@@ -1,10 +1,10 @@
 ﻿@model LocalityEditVm
 <form method="post">
     @Html.AntiForgeryToken();
-    <input type="hidden"asp-for="LocalityId" />
+    <input type="hidden" asp-for="LocalityId" />
     <div class="border p-3 m-4 w-75 mx-auto">
         <div class="row pb-2">
-            <h2 class="text-primary">Update Locality</h2>
+            <h2 class="text-primary">@(Model.LocalityId == 0 ? "Add Locality" : "Update Locality")</h2>
             <hr />
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -19,11 +19,20 @@
                 Delivery
             </label>
         </div>
-
-        <button class="btn btn-warning" type="submit">
-            <i class="bi bi-floppy2-fill"></i>
-            Update
-        </button>
+        @if(Model.LocalityId == 0)
+        {
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Save
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-warning" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Update
+            </button>
+        }
         <a class="btn btn-success" asp-controller="Localities" asp-action="Index">
             <i class="bi bi-backspace"></i>
             Back to List

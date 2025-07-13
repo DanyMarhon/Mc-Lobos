@@ -1,10 +1,10 @@
 ﻿@model PaymentMethodEditVm
 <form method="post">
     @Html.AntiForgeryToken();
-    <input type="hidden"asp-for="PaymentMethodId" />
+    <input type="hidden" asp-for="PaymentMethodId" />
     <div class="border p-3 m-4 w-75 mx-auto">
         <div class="row pb-2">
-            <h2 class="text-primary">Update Payment Method</h2>
+            <h2 class="text-primary">@(Model.PaymentMethodId == 0 ? "Add Payment Method" : "Update Payment Method")</h2>
             <hr />
         </div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -16,19 +16,28 @@
         <div class="mb-3 row p-1">
             <label class="p-0" asp-for="Description"></label>
             <textarea class="form-control" asp-for="Description" style="width:100%; height:10"></textarea>
-			<span class="text-danger" asp-validation-for="Description"></span>
-		</div>
+            <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
         <div class="form-check mb-4">
             <input type="checkbox" asp-for="IsActive" class="form-check-input" />
             <label class="form-check-label" asp-for="IsActive">
                 Is Active ?
             </label>
         </div>
-
-        <button class="btn btn-warning" type="submit">
-            <i class="bi bi-floppy2-fill"></i>
-            Update
-        </button>
+        @if(Model.PaymentMethodId == 0)
+        {
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Save
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-warning" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Update
+            </button>
+        }
         <a class="btn btn-success" asp-controller="PaymentMethod" asp-action="Index">
             <i class="bi bi-backspace"></i>
             Back to List

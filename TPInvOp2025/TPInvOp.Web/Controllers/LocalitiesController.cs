@@ -72,11 +72,15 @@ namespace TPInvOp.Web.Controllers
             }
             return View(localityVm);
         }
-        public IActionResult Edit(int? id)
+        public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)
             {
-                return NotFound();
+                var model = new LocalityEditVm()
+                {
+                    LocalityId = 0
+                };
+                return View(model);
             }
             try
             {
@@ -97,7 +101,7 @@ namespace TPInvOp.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(LocalityEditVm localityVm)
+        public IActionResult Upsert(LocalityEditVm localityVm)
         {
             if (ModelState.IsValid)
             {
