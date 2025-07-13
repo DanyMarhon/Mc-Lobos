@@ -57,7 +57,8 @@ namespace TPInvOp.Service.Services
 
         public CategoryEditDto? CategoryById(int id)
         {
-            var category = _unitOfWork.Categories.GetById(id);
+            var category = _unitOfWork.Categories.Get(filter: c => c.CategoryId == id,
+                tracked: true);
             if (category is null) return null;
             return _mapper.Map<CategoryEditDto>(category);
         }
@@ -66,13 +67,14 @@ namespace TPInvOp.Service.Services
         public bool Remove(int categoryId, out List<string> errors)
         {
             errors = new List<string>();
-            var category = _unitOfWork.Categories.GetById(categoryId);
+            var category = _unitOfWork.Categories.Get(filter:c=>c.CategoryId == categoryId,
+                tracked: true);
             if (category is null)
             {
                 errors.Add("Category does not exist");
                 return false;
             }
-            _unitOfWork.Categories.Remove(categoryId);
+            _unitOfWork.Categories.Remove(category);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
         }
