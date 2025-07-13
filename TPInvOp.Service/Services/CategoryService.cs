@@ -17,6 +17,24 @@ namespace TPInvOp.Service.Services
             _mapper = mapper;
         }
 
+        public IQueryable<CategoryListDto> GetAll()
+        {
+            var categories = _unitOfWork.Categories.GetAll();
+            return _mapper.ProjectTo<CategoryListDto>(categories);
+        }
+
+        public CategoryEditDto? CategoryById(int id)
+        {
+            var category = _unitOfWork.Categories.Get(filter: c => c.CategoryId == id,
+                tracked: true);
+            if (category is null) return null;
+            return _mapper.Map<CategoryEditDto>(category);
+        }
+        public bool Exist(Category category, int? excludeId = null)
+        {
+            return _unitOfWork.Categories.Exist(category, excludeId);
+        }
+
         public bool Save(CategoryEditDto categoryDto, out List<string> errors)
         {
             errors = new List<string>();
@@ -54,16 +72,6 @@ namespace TPInvOp.Service.Services
 
             }
         }
-
-        public CategoryEditDto? CategoryById(int id)
-        {
-            var category = _unitOfWork.Categories.Get(filter: c => c.CategoryId == id,
-                tracked: true);
-            if (category is null) return null;
-            return _mapper.Map<CategoryEditDto>(category);
-        }
-
-
         public bool Remove(int categoryId, out List<string> errors)
         {
             errors = new List<string>();
@@ -77,17 +85,6 @@ namespace TPInvOp.Service.Services
             _unitOfWork.Categories.Remove(category);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
-        }
-
-        public bool Exist(Category category, int? excludeId = null)
-        {
-            return _unitOfWork.Categories.Exist(category, excludeId);
-        }
-
-        public IQueryable<CategoryListDto> GetAll()
-        {
-            var categories = _unitOfWork.Categories.GetAll();
-            return _mapper.ProjectTo<CategoryListDto>(categories);
         }
     }
 }

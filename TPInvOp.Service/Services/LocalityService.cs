@@ -17,6 +17,25 @@ namespace TPInvOp.Service.Services
             _mapper = mapper;
         }
 
+        public IQueryable<LocalityListDto> GetAll()
+        {
+            var localityes = _unitOfWork.Localities.GetAll();
+            return _mapper.ProjectTo<LocalityListDto>(localityes);
+        }
+
+        public LocalityEditDto? LocalityById(int id)
+        {
+            var locality = _unitOfWork.Localities.Get(filter: l => l.LocalityId == id,
+                tracked: true);
+            if (locality is null) return null;
+            return _mapper.Map<LocalityEditDto>(locality);
+        }
+
+        public bool Exist(Locality locality, int? excludeId = null)
+        {
+            return _unitOfWork.Localities.Exist(locality, excludeId);
+        }
+
         public bool Save(LocalityEditDto localityDto, out List<string> errors)
         {
             errors = new List<string>();
@@ -58,34 +77,16 @@ namespace TPInvOp.Service.Services
         public bool Remove(int localityId, out List<string> errors)
         {
             errors = new List<string>();
-            var locality = _unitOfWork.Localities.GetById(localityId);
+            var locality = _unitOfWork.Localities.Get(filter:l=>l.LocalityId == localityId,
+                tracked: true);
             if (locality is null)
             {
                 errors.Add("Locality does not exist");
                 return false;
             }
-            _unitOfWork.Localities.Remove(localityId);
+            _unitOfWork.Localities.Remove(locality);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
         }
-
-        public bool Exist(Locality locality, int? excludeId = null)
-        {
-            return _unitOfWork.Localities.Exist(locality, excludeId);
-        }
-
-        public IQueryable<LocalityListDto> GetAll()
-        {
-            var localityes = _unitOfWork.Localities.GetAll();
-            return _mapper.ProjectTo<LocalityListDto>(localityes);
-        }
-
-        public LocalityEditDto? LocalityById(int id)
-        {
-            var locality = _unitOfWork.Localities.GetById(id);
-            if (locality is null) return null;
-            return _mapper.Map<LocalityEditDto>(locality);
-        }
-
     }
 }

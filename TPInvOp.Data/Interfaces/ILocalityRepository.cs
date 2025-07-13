@@ -2,14 +2,9 @@
 
 namespace TPInvOp.Data.Interfaces
 {
-    public interface ILocalityRepository
+    public interface ILocalityRepository:IGenericRepository<Locality>
     {
-        IQueryable<Locality> GetAll();
-        Locality? GetById(int id);
-        void Add(Locality locality);
         bool Exist(Locality locality, int? excludeId = null);
         void Update(Locality locality);
-        void Remove(int localityId);
-        void SaveChanges();
     }
 }
