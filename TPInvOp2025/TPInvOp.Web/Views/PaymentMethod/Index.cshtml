@@ -1,11 +1,6 @@
-﻿@model X.PagedList.IPagedList<PaymentMethodListVm>
-@if (TempData["success"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>✔ OK!</strong> @TempData["success"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
+﻿@using TPInvOp.Web.ViewModels.PaymentMethod
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<PaymentMethodListVm>
 
 <div class="card shadow rounded mt-4">
     <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -18,7 +13,7 @@
         @if (!Model.Any())
         {
             <div class="alert alert-warning m-3">
-				<p>There are no payment methods registered.</p>
+                <p>There are no payment methods registered.</p>
             </div>
         }
         else
@@ -56,11 +51,11 @@
                                     Delete
                                 </a>
                             </td>
-
                         </tr>
                     }
                 </tbody>
             </table>
+
             @Html.PagedListPager(
             Model,
                 page => Url.Action("Index", new { page }),
@@ -84,6 +79,6 @@
                     MaximumPageNumbersToDisplay = 5
                 }
                 )
-        }
+                }
     </div>
 </div>

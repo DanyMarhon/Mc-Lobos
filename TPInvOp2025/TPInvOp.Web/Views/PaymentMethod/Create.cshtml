@@ -1,4 +1,5 @@
-﻿@model PaymentMethodEditVm
+﻿@using TPInvOp.Web.ViewModels.PaymentMethod
+@model PaymentMethodEditVm
 
 <div class="container mt-5">
     <div class="card shadow rounded">
@@ -25,7 +26,7 @@
                     <input asp-for="Name" class="form-control" />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-
+                succes
                 <div class="mb-3">
                     <label asp-for="Description" class="form-label fw-bold"></label>
                     <input asp-for="Description" class="form-control" />
