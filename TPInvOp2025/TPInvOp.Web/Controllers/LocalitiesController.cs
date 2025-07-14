@@ -109,7 +109,14 @@ namespace TPInvOp.Web.Controllers
                 {
                     if (_localityService.Save(localityDto, out var errors))
                     {
-                        TempData["success"] = "Register Successfully Updated";
+                        if(localityDto.LocalityId == 0)
+                        {
+                            TempData["success"] = "Register Successfully Added";
+                        }
+                        else
+                        {
+                            TempData["success"] = "Register Successfully Updated";
+                        }
                         return RedirectToAction("Index");
                     }
                     else

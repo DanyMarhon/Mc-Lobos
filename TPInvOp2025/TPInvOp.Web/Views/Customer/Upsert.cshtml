@@ -1,0 +1,69 @@
+﻿@model CustomerEditVm
+<form method="post">
+    @Html.AntiForgeryToken();
+    <input type="hidden" asp-for="CustomerId" />
+    <div class="border p-3 m-4 w-75 mx-auto">
+        <div class="row pb-2">
+            <h2 class="text-primary">@(Model.CustomerId == 0 ? "Add Customer" : "Update Customer")</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3 row p-1">
+            <label class="p-0" asp-for="CustomerName"></label>
+            <input class="form-control" asp-for="CustomerName" />
+            <span class="text-danger" asp-validation-for="CustomerName"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p-0" asp-for="ContactPhone"></label>
+            <input class="form-control" asp-for="ContactPhone" />
+            <span class="text-danger" asp-validation-for="ContactPhone"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p-0" asp-for="DeliveryAddress"></label>
+            <textarea class="form-control" asp-for="DeliveryAddress" style="width:100%; height:10;"></textarea>
+            <span class="text-danger" asp-validation-for="DeliveryAddress"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p-0" asp-for="LocalityId"></label>
+            <select class="form-select" asp-for="LocalityId" asp-items="@Model.Localities">
+                <option selected disabled>Select Locality</option>
+            </select>
+            <span class="text-danger" asp-validation-for="LocalityId"></span>
+        </div>
+        @if (Model.CustomerId == 0)
+        {
+            <button class="btn btn-primary" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Save
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-warning" type="submit">
+                <i class="bi bi-floppy2-fill"></i>
+                Update
+            </button>
+        }
+
+        <a class="btn btn-success" asp-controller="Customer" asp-action="Index">
+            <i class="bi bi-backspace"></i>
+            Back to List
+        </a>
+    </div>
+</form>
+@section Scripts {
+    @{
+        <!-- Place the first <script> tag in your HTML's <head> -->
+        <script src="https://cdn.tiny.cloud/1/ee4otp9ao47w6zc7rvtt4pdkf4mzwi5nzj603z034gzx78i0/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+        <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+        <script>
+            tinymce.init({
+              selector: 'textarea',
+              plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+              toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            });
+        </script>
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

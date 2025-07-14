@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TPInvOp.Service.DTOs.PaymentMethod;
 using TPInvOp.Service.Interfaces;
+using TPInvOp.Service.Services;
 using TPInvOp.Web.ViewModels.PaymentMethod;
 using X.PagedList;
 using X.PagedList.Extensions;
@@ -110,7 +111,15 @@ namespace TPInvOp.Web.Controllers
                 {
                     if (_paymentMethodService.Save(paymentMethodDto, out var errors))
                     {
-                        TempData["success"] = "Register Successfully Updated";
+
+                        if (paymentMethodDto.PaymentMethodId == 0)
+                        {
+                            TempData["success"] = "Register Successfully Added";
+                        }
+                        else
+                        {
+                            TempData["success"] = "Register Successfully Updated";
+                        }
                         return RedirectToAction("Index");
                     }
                     else
