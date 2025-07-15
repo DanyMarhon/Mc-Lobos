@@ -38,41 +38,6 @@ namespace TPInvOp.Web.Controllers
             return View(viewModelPagedList);
         }
 
-
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(PaymentMethodEditVm paymentMethodVm)
-        {
-            if (ModelState.IsValid)
-            {
-                PaymentMethodEditDto paymentMethodDto = _mapper.Map<PaymentMethodEditDto>(paymentMethodVm);
-                try
-                {
-                    if (_paymentMethodService.Save(paymentMethodDto, out var errors))
-                    {
-                        TempData["success"] = "Register Successfully Added";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, errors.First());
-                    }
-                    return View(paymentMethodVm);
-                }
-                catch (Exception ex)
-                {
-
-                    ModelState.AddModelError(string.Empty, "F!ck!! Something Happen" + ex.Message);
-                }
-
-            }
-            return View(paymentMethodVm);
-        }
         public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)

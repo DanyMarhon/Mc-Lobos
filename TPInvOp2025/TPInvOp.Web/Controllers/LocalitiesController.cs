@@ -36,41 +36,7 @@ namespace TPInvOp.Web.Controllers
                 );
             return View(viewModelPagedList);
         }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(LocalityEditVm localityVm)
-        {
-            if (ModelState.IsValid)
-            {
-                LocalityEditDto localityDto = _mapper.Map<LocalityEditDto>(localityVm);
-                try
-                {
-                    if (_localityService.Save(localityDto, out var errors))
-                    {
-                        TempData["success"] = "Register Successfully Added";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, errors.First());
-                    }
-                    return View(localityVm);
-                }
-                catch (Exception ex)
-                {
-
-                    ModelState.AddModelError(string.Empty, "F!ck!! Something Happen" + ex.Message);
-                }
-
-            }
-            return View(localityVm);
-        }
+        
         public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)

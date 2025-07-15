@@ -36,41 +36,7 @@ namespace TPInvOp.Web.Controllers
                 );
             return View(viewModelPagedList);
         }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(CategoryEditVm categoryVm)
-        {
-            if (ModelState.IsValid)
-            {
-                CategoryEditDto categoryDto = _mapper.Map<CategoryEditDto>(categoryVm);
-                try
-                {
-                    if (_categoryService.Save(categoryDto, out var errors))
-                    {
-                        TempData["success"] = "Register Successfully Added";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, errors.First());
-                    }
-                    return View(categoryVm);
-                }
-                catch (Exception ex)
-                {
-
-                    ModelState.AddModelError(string.Empty, "F!ck!! Something Happen" + ex.Message);
-                }
-
-            }
-            return View(categoryVm);
-        }
+       
         public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)
@@ -100,6 +66,7 @@ namespace TPInvOp.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         public IActionResult Upsert(CategoryEditVm categoryVm)
         {
             if (ModelState.IsValid)

@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using TPInvOp.Service.DTOs.Category;
 using TPInvOp.Service.DTOs.Customer;
 using TPInvOp.Service.Interfaces;
-using TPInvOp.Service.Services;
-using TPInvOp.Web.ViewModels.Category;
 using TPInvOp.Web.ViewModels.Customer;
 using X.PagedList;
 using X.PagedList.Extensions;
@@ -47,56 +44,7 @@ namespace TPInvOp.Web.Controllers
             return View(viewModelPagedList);
         }
 
-        public IActionResult Create()
-        {
-            var viewModel = new CustomerEditVm();
-            var localities = _localityService.GetAll()
-                .Select(l => new SelectListItem
-                {
-                    Value = l.LocalityId.ToString(),
-                    Text = l.LocalityName
-                }).ToList();
-            viewModel.Localities = localities;
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(CustomerEditVm customerVm)
-        {
-            var localities = _localityService.GetAll()
-            .Select(l => new SelectListItem
-            {
-                Value = l.LocalityId.ToString(),
-                Text = l.LocalityName
-            }).ToList();
-            if (ModelState.IsValid)
-            {
-                CustomerEditDto customerDto = _mapper.Map<CustomerEditDto>(customerVm);
-                try
-                {
-                    if (_customerService.Save(customerDto, out var errors))
-                    {
-                        TempData["success"] = "Register Successfully Added";
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, errors.First());
-                        customerVm.Localities = localities;
-                    }
-                    return View(customerDto);
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, "F!ck!! Something Happen" + ex.Message);
-                    customerVm.Localities = localities;
-                }
-
-            }
-            customerVm.Localities = localities;
-            return View(customerVm);
-        }
+        
         public IActionResult Upsert(int? id)
         {
             var localities = _localityService.GetAll()
@@ -143,7 +91,7 @@ namespace TPInvOp.Web.Controllers
             }).ToList();
             if (ModelState.IsValid)
             {
-                CustomerEditDto customerDto  = _mapper.Map<CustomerEditDto>(customerVm);
+                CustomerEditDto customerDto = _mapper.Map<CustomerEditDto>(customerVm);
                 try
                 {
                     if (_customerService.Save(customerDto, out var errors))
