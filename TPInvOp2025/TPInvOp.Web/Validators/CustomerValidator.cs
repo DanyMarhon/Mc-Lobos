@@ -15,7 +15,7 @@ namespace TPInvOp.Web.Validators
                 .Matches(@"^\+?[0-9]{7,15}$").WithMessage("Only numbers allowed, optionally starting with '+'");
             RuleFor(c => c.DeliveryAddress).NotEmpty().WithMessage("Required")
                 .MinimumLength(3).WithMessage("Must have al least {MinLength} characters")
-                .MaximumLength(255).WithMessage("No more than {MaxLength} characters");
+                .MaximumLength(247).WithMessage("No more than 240 characters");
         }
     }
 }

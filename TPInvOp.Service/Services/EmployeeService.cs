@@ -19,13 +19,13 @@ namespace TPInvOp.Service.Services
 
         public IQueryable<EmployeeListDto> GetAll()
         {
-            var employeees = _unitOfWork.Employee.GetAll();
-            return _mapper.ProjectTo<EmployeeListDto>(employeees);
+            var employees = _unitOfWork.Employee.GetAll();
+            return _mapper.ProjectTo<EmployeeListDto>(employees);
         }
 
         public EmployeeEditDto? EmployeeById(int id)
         {
-            var employee = _unitOfWork.Employee.Get(filter: l => l.EmployeeID == id,
+            var employee = _unitOfWork.Employee.Get(filter: l => l.EmployeeId == id,
                 tracked: true);
             if (employee is null) return null;
             return _mapper.Map<EmployeeEditDto>(employee);
@@ -40,7 +40,7 @@ namespace TPInvOp.Service.Services
         {
             errors = new List<string>();
             Employee employee = _mapper.Map<Employee>(employeeDto);
-            if (employee.EmployeeID == 0)
+            if (employee.EmployeeId == 0)
             {
                 if (!_unitOfWork.Employee.Exist(employee))
                 {
@@ -58,7 +58,7 @@ namespace TPInvOp.Service.Services
             }
             else
             {
-                if (!_unitOfWork.Employee.Exist(employee, employee.EmployeeID))
+                if (!_unitOfWork.Employee.Exist(employee, employee.EmployeeId))
                 {
                     _unitOfWork.Employee.Update(employee);
                     int rowsAffected = _unitOfWork.Complete();
@@ -77,7 +77,7 @@ namespace TPInvOp.Service.Services
         public bool Remove(int employeeId, out List<string> errors)
         {
             errors = new List<string>();
-            var employee = _unitOfWork.Employee.Get(filter: l => l.EmployeeID == employeeId,
+            var employee = _unitOfWork.Employee.Get(filter: l => l.EmployeeId == employeeId,
                 tracked: true);
             if (employee is null)
             {

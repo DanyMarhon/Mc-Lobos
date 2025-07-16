@@ -16,12 +16,12 @@ namespace TPInvOp.Data.Repositories
         {
             return excludeId.HasValue
                 ? _dbContext.Employees.Any(e => e.EmployeeName.ToUpper() == employee.EmployeeName.ToUpper()
-                                && e.EmployeeID != excludeId)
+                                && e.EmployeeId != excludeId)
                 : _dbContext.Employees.Any(e => e.EmployeeName.ToUpper() == employee.EmployeeName.ToUpper());
         }
         public void Update(Employee employee)
         {
-            var employeeInDb = Get(filter: p => p.EmployeeID == employee.EmployeeID,
+            var employeeInDb = Get(filter: p => p.EmployeeId == employee.EmployeeId,
                 tracked: true);
             if (employeeInDb != null)
             {

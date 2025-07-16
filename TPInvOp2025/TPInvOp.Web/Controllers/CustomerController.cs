@@ -44,7 +44,7 @@ namespace TPInvOp.Web.Controllers
             return View(viewModelPagedList);
         }
 
-        
+
         public IActionResult Upsert(int? id)
         {
             var localities = _localityService.GetAll()

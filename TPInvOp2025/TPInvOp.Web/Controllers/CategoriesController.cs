@@ -36,7 +36,7 @@ namespace TPInvOp.Web.Controllers
                 );
             return View(viewModelPagedList);
         }
-       
+
         public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)
@@ -76,7 +76,7 @@ namespace TPInvOp.Web.Controllers
                 {
                     if (_categoryService.Save(categoryDto, out var errors))
                     {
-                        if(categoryDto.CategoryId == 0)
+                        if (categoryDto.CategoryId == 0)
                         {
                             TempData["success"] = "Register Successfully Added";
                         }

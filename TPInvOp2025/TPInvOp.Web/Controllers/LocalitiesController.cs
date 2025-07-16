@@ -36,7 +36,7 @@ namespace TPInvOp.Web.Controllers
                 );
             return View(viewModelPagedList);
         }
-        
+
         public IActionResult Upsert(int? id)
         {
             if (id is null || id == 0)
@@ -75,7 +75,7 @@ namespace TPInvOp.Web.Controllers
                 {
                     if (_localityService.Save(localityDto, out var errors))
                     {
-                        if(localityDto.LocalityId == 0)
+                        if (localityDto.LocalityId == 0)
                         {
                             TempData["success"] = "Register Successfully Added";
                         }

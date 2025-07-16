@@ -1,33 +1,35 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TPInvOp.Service.DTOs.PaymentMethod;
+using TPInvOp.Service.DTOs.Category;
+using TPInvOp.Service.DTOs.Employee;
 using TPInvOp.Service.Interfaces;
-using TPInvOp.Web.ViewModels.PaymentMethod;
+using TPInvOp.Web.ViewModels.Category;
+using TPInvOp.Web.ViewModels.Employee;
 using X.PagedList;
 using X.PagedList.Extensions;
 
 namespace TPInvOp.Web.Controllers
 {
-    public class PaymentMethodController : Controller
+    public class EmployeeController : Controller
     {
-        private readonly IPaymentMethodService _paymentMethodService;
+        private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
-
-        public PaymentMethodController(IPaymentMethodService paymentMethodService, IMapper mapper)
+        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
         {
-            _paymentMethodService = paymentMethodService;
+            _employeeService = employeeService;
             _mapper = mapper;
         }
+
         public IActionResult Index(int? page, int? pageSize)
         {
             int pageNumber = page ?? 1;
             int registerPerPage = pageSize ?? 8;
 
-            var paymentDto = _paymentMethodService.GetAll();
-            var pagedListDto = paymentDto.ToPagedList(pageNumber, registerPerPage);
-            var viewModelList = _mapper.Map<List<PaymentMethodListVm>>(pagedListDto);
+            var employeeDto = _employeeService.GetAll();
+            var pagedListDto = employeeDto.ToPagedList(pageNumber, registerPerPage);
+            var viewModelList = _mapper.Map<List<EmployeeListVm>>(pagedListDto);
 
-            var viewModelPagedList = new StaticPagedList<PaymentMethodListVm>
+            var viewModelPagedList = new StaticPagedList<EmployeeListVm>
                 (
                     viewModelList,
                     pagedListDto.PageNumber,
@@ -41,42 +43,42 @@ namespace TPInvOp.Web.Controllers
         {
             if (id is null || id == 0)
             {
-                var model = new PaymentMethodEditVm()
+                var model = new EmployeeEditVm()
                 {
-                    PaymentMethodId = 0
+                    EmployeeId = 0
                 };
                 return View(model);
             }
             try
             {
-                PaymentMethodEditDto? paymentMethodDto = _paymentMethodService.PaymentMethodById(id.Value);
-                if (paymentMethodDto is null)
+                EmployeeEditDto? employeeDto = _employeeService.EmployeeById(id.Value);
+                if (employeeDto is null)
                 {
-                    return NotFound($"Payment Method With Id {id} Not Found!!");
+                    return NotFound($"Employee With Id {id} Not Found!!");
                 }
-                PaymentMethodEditVm paymentMethodVm = _mapper.Map<PaymentMethodEditVm>(paymentMethodDto);
-                return View(paymentMethodVm);
+                EmployeeEditVm employeeVm = _mapper.Map<EmployeeEditVm>(employeeDto);
+                return View(employeeVm);
             }
             catch (Exception)
             {
 
-                TempData["error"] = "Error while trying to get a payment method";
+                TempData["error"] = "Error while trying to get an employee";
                 return RedirectToAction("Index");
             }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(PaymentMethodEditVm paymentMethodVm)
+
+        public IActionResult Upsert(EmployeeEditVm employeeVm)
         {
             if (ModelState.IsValid)
             {
-                PaymentMethodEditDto paymentMethodDto = _mapper.Map<PaymentMethodEditDto>(paymentMethodVm);
+                EmployeeEditDto employeeDto = _mapper.Map<EmployeeEditDto>(employeeVm);
                 try
                 {
-                    if (_paymentMethodService.Save(paymentMethodDto, out var errors))
+                    if (_employeeService.Save(employeeDto, out var errors))
                     {
-
-                        if (paymentMethodDto.PaymentMethodId == 0)
+                        if (employeeDto.EmployeeId == 0)
                         {
                             TempData["success"] = "Register Successfully Added";
                         }
@@ -90,7 +92,7 @@ namespace TPInvOp.Web.Controllers
                     {
                         ModelState.AddModelError(string.Empty, errors.First());
                     }
-                    return View(paymentMethodVm);
+                    return View(employeeVm);
                 }
                 catch (Exception ex)
                 {
@@ -99,7 +101,7 @@ namespace TPInvOp.Web.Controllers
                 }
 
             }
-            return View(paymentMethodVm);
+            return View(employeeVm);
         }
         public IActionResult Delete(int? id)
         {
@@ -109,18 +111,18 @@ namespace TPInvOp.Web.Controllers
             }
             try
             {
-                PaymentMethodEditDto? paymentMethodDto = _paymentMethodService.PaymentMethodById(id.Value);
-                if (paymentMethodDto is null)
+                EmployeeEditDto? employeeDto = _employeeService.EmployeeById(id.Value);
+                if (employeeDto is null)
                 {
-                    return NotFound($"Payment Method With Id {id} Not Found!!");
+                    return NotFound($"Employee With Id {id} Not Found!!");
                 }
-                PaymentMethodEditVm paymentMethodVm = _mapper.Map<PaymentMethodEditVm>(paymentMethodDto);
-                return View(paymentMethodVm);
+                EmployeeEditVm employeeVm = _mapper.Map<EmployeeEditVm>(employeeDto);
+                return View(employeeVm);
             }
             catch (Exception)
             {
 
-                TempData["error"] = "Error while trying to get a payment method";
+                TempData["error"] = "Error while trying to get a employee";
                 return RedirectToAction("Index");
             }
         }
@@ -135,30 +137,33 @@ namespace TPInvOp.Web.Controllers
             }
             try
             {
-                PaymentMethodEditDto? paymentMethodDto = _paymentMethodService.PaymentMethodById(id.Value);
-                if (paymentMethodDto is null)
+                EmployeeEditDto? employeeDto = _employeeService.EmployeeById(id.Value);
+                if (employeeDto is null)
                 {
-                    return NotFound($"Payment Method With Id {id} Not Found!!");
+                    return NotFound($"Employee With Id {id} Not Found!!");
                 }
-                if (_paymentMethodService.Remove(id.Value, out var errors))
+                if (_employeeService.Remove(id.Value, out var errors))
                 {
-                    TempData["success"] = "Payment Method Succesfully Removed";
+                    TempData["success"] = "Employee Succesfully Removed";
                     return RedirectToAction("Index");
                 }
                 else
                 {
-                    PaymentMethodEditVm paymentMethodVm = _mapper.Map<PaymentMethodEditVm>(paymentMethodDto);
+                    EmployeeEditVm employeeVm = _mapper.Map<EmployeeEditVm>(employeeDto);
                     ModelState.AddModelError(string.Empty, errors.First());
-                    return View(paymentMethodVm);
+                    return View(employeeVm);
 
                 }
             }
             catch (Exception)
             {
 
-                TempData["error"] = "Error while trying to get a payment method";
+                TempData["error"] = "Error while trying to get a employee";
                 return RedirectToAction("Index");
             }
+
         }
     }
 }
+
+

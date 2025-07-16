@@ -1,0 +1,78 @@
+﻿@model X.PagedList.IPagedList<EmployeeListVm>
+
+<div class="card shadow rounded mt-4 mb-5">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Employee List</h4>
+        <a class="btn btn-light text-primary fw-bold" asp-controller="Employee" asp-action="Upsert">
+            <i class="bi bi-plus-circle me-1"></i> New Employee
+        </a>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning m-3">
+                <p>There are no registered employees</p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model)
+                    {
+                        <tr>
+                            <td>@employee.EmployeeName</td>
+                            <td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-warning me-1" asp-controller="Employee" asp-action="Upsert" asp-route-id="@employee.EmployeeId">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </a>
+                                <button type="button" class="btn btn-danger" onclick="confirmarBaja(@employee.EmployeeId, '@employee.EmployeeName', '@typeof(Employee).Name')">
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </button>
+
+                                <!--Formulario oculto para submit post-->
+                                <form id="formDelete-@employee.EmployeeId" method="post" asp-action="Delete" style="display: none;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@employee.EmployeeId" />
+                                </form>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(
+                Model,
+                page => Url.Action("Index", new {page}),
+                new PagedListRenderOptions
+                {
+                    LiElementClasses = new [] {"page-item"},
+                    PageClasses = new[] {"page-link"},
+                    UlElementClasses = new[] { "pagination", "justify-content-center" },
+
+                    LinkToFirstPageFormat = "<i class='bi bi-chevron-double-left'></i>",
+                    LinkToPreviousPageFormat = "<i class='bi bi-chevron-left'></i>",
+                    LinkToNextPageFormat = "<i class='bi bi-chevron-right'></i>",
+                    LinkToLastPageFormat = "<i class='bi bi-chevron-double-right'></i>",
+
+                    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                    DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+
+                    DisplayLinkToIndividualPages = true,
+                    MaximumPageNumbersToDisplay = 5
+                }
+            )
+        }
+    </div>
+</div>
