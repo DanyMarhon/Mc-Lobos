@@ -51,7 +51,8 @@ namespace TPInvOp.Service.Mappers
         }
         private void LoadProductMapping()
         {
-            CreateMap<Product, ProductListDto>().ReverseMap();
+            CreateMap<Product, ProductListDto>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category!.CategoryName));
             CreateMap<Product, ProductEditDto>().ReverseMap();
         }
     }

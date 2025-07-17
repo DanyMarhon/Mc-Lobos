@@ -16,12 +16,12 @@ namespace TPInvOp.Data.Repositories
         {
             return excludeId.HasValue
                 ? _dbContext.Products.Any(p => p.ProductName.ToUpper() == product.ProductName.ToUpper()
-                                && p.ProductID != excludeId)
+                                && p.ProductId != excludeId)
                 : _dbContext.Products.Any(p => p.ProductName.ToUpper() == product.ProductName.ToUpper());
         }
         public void Update(Product product)
         {
-            var productInDb = Get(filter: p => p.ProductID == product.ProductID,
+            var productInDb = Get(filter: p => p.ProductId == product.ProductId,
                 tracked: true);
             if (productInDb != null)
             {
@@ -29,6 +29,7 @@ namespace TPInvOp.Data.Repositories
                 productInDb.Price = product.Price;
                 productInDb.Description = product.Description;
                 productInDb.IsActive = product.IsActive;
+                productInDb.CategoryID = product.CategoryID;
 
                 _dbContext.Entry(productInDb).State = EntityState.Modified;
             }

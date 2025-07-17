@@ -1,0 +1,92 @@
+﻿@model X.PagedList.IPagedList<ProductListVm>
+<div class="card shadow rounded mt-4">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">Product List</h4>
+        <a class="btn btn-light text-primary fw-bold" asp-controller="Product" asp-action="Upsert">
+            <i class="bi bi-plus-circle me-1"></i> New Product
+        </a>
+    </div>
+    <div class="card-body p-0">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning m-3">
+                <p>There are no products registered.</p>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Is Active</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var product in Model)
+                    {
+                        <tr>
+                            <td>@product.ProductName</td>
+                            <td>@product.Price</td>
+                            <td>@product.CategoryName</td>
+                            <td>
+                                @if (product.IsActive)
+                                {
+                                    <span class="badge bg-success">Yes</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">No</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-warning me-1" asp-controller="Product" asp-action="Upsert" asp-route-id="@product.ProductId">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </a>
+                                <button type="button" class="btn btn-danger" onclick="confirmarBaja(@product.ProductId, '@product.ProductName', '@typeof(Product).Name')">
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </button>
+
+                                <!--Formulario oculto para submit post-->
+                                <form id="formDelete-@product.ProductId" method="post" asp-action="Delete" style="display: none;">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@product.ProductId" />
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @Html.PagedListPager(
+                     Model,
+                     page => Url.Action("Index", new { page }),
+                     new PagedListRenderOptions
+        {
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+            UlElementClasses = new[] { "pagination", "justify-content-center" },
+
+            LinkToFirstPageFormat = "<i class='bi bi-chevron-double-left'></i>",
+            LinkToPreviousPageFormat = "<i class='bi bi-chevron-left'></i>",
+            LinkToNextPageFormat = "<i class='bi bi-chevron-right'></i>",
+            LinkToLastPageFormat = "<i class='bi bi-chevron-double-right'></i>",
+
+            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+
+            DisplayLinkToIndividualPages = true,
+            MaximumPageNumbersToDisplay = 5
+        }
+                     )
+        }
+    </div>
+
+</div>

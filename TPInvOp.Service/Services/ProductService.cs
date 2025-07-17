@@ -19,32 +19,32 @@ namespace TPInvOp.Service.Services
 
         public IQueryable<ProductListDto> GetAll()
         {
-            var productes = _unitOfWork.Products.GetAll();
-            return _mapper.ProjectTo<ProductListDto>(productes);
+            var products = _unitOfWork.Products.GetAll();
+            return _mapper.ProjectTo<ProductListDto>(products);
         }
 
         public ProductEditDto? ProductById(int id)
         {
-            var product = _unitOfWork.Products.Get(filter: p => p.ProductID == id,
+            var category = _unitOfWork.Products.Get(filter: c => c.ProductId == id,
                 tracked: true);
-            if (product is null) return null;
-            return _mapper.Map<ProductEditDto>(product);
+            if (category is null) return null;
+            return _mapper.Map<ProductEditDto>(category);
         }
 
-        public bool Exist(Product product, int? excludeId = null)
+        public bool Exist(Product category, int? excludeId = null)
         {
-            return _unitOfWork.Products.Exist(product, excludeId);
+            return _unitOfWork.Products.Exist(category, excludeId);
         }
 
-        public bool Save(ProductEditDto productDto, out List<string> errors)
+        public bool Save(ProductEditDto categoryDto, out List<string> errors)
         {
             errors = new List<string>();
-            Product product = _mapper.Map<Product>(productDto);
-            if (product.ProductID == 0)
+            Product category = _mapper.Map<Product>(categoryDto);
+            if (category.ProductId == 0)
             {
-                if (!_unitOfWork.Products.Exist(product))
+                if (!_unitOfWork.Products.Exist(category))
                 {
-                    _unitOfWork.Products.Add(product);
+                    _unitOfWork.Products.Add(category);
                     int rowsAffected = _unitOfWork.Complete();
                     return rowsAffected > 0;
 
@@ -58,9 +58,9 @@ namespace TPInvOp.Service.Services
             }
             else
             {
-                if (!_unitOfWork.Products.Exist(product, product.ProductID))
+                if (!_unitOfWork.Products.Exist(category, category.ProductId))
                 {
-                    _unitOfWork.Products.Update(product);
+                    _unitOfWork.Products.Update(category);
                     int rowsAffected = _unitOfWork.Complete();
                     return rowsAffected > 0;
 
@@ -74,17 +74,17 @@ namespace TPInvOp.Service.Services
             }
         }
 
-        public bool Remove(int productId, out List<string> errors)
+        public bool Remove(int categoryId, out List<string> errors)
         {
             errors = new List<string>();
-            var product = _unitOfWork.Products.Get(filter: l => l.ProductID == productId,
+            var category = _unitOfWork.Products.Get(filter: c => c.ProductId == categoryId,
                 tracked: true);
-            if (product is null)
+            if (category is null)
             {
                 errors.Add("Product does not exist");
                 return false;
             }
-            _unitOfWork.Products.Remove(product);
+            _unitOfWork.Products.Remove(category);
             var rowsAffected = _unitOfWork.Complete();
             return rowsAffected > 0;
         }
