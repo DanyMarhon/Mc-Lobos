@@ -20,18 +20,18 @@
         {
             <table class="table table-hover mb-0">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Is Active</th>
-                        <th class="text-end">Actions</th>
+                    <tr class="row-cols-6">
+                        <th class="col-5">Name</th>
+                        <th class="col-5">Is Active</th>
+                        <th class="col-2 text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var paymentMethod in Model)
                     {
-                        <tr>
-                            <td>@paymentMethod.Name</td>
-                            <td>
+                        <tr class="row-cols-6">
+                            <td class="col-5">@paymentMethod.Name</td>
+                            <td class="col-5 ps-4">
                                 @if (paymentMethod.IsActive)
                                 {
                                     <span class="badge bg-success">Yes</span>
@@ -41,7 +41,7 @@
                                     <span class="badge bg-secondary">No</span>
                                 }
                             </td>
-                            <td class="text-end">
+                            <td class="col-2 text-center">
                                 <a class="btn btn-sm btn-outline-warning me-1" asp-controller="PaymentMethod" asp-action="Upsert" asp-route-id="@paymentMethod.PaymentMethodId">
                                     <i class="bi bi-pencil-square"></i>
                                     Edit

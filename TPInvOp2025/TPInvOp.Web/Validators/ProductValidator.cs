@@ -10,7 +10,7 @@ namespace TPInvOp.Web.Validators
             RuleFor(p => p.ProductName)
                 .NotEmpty().WithMessage("The {PropertyName} is required")
                 .MinimumLength(3).WithMessage("Must have at least {MinLength} characters")
-                .MaximumLength(50).WithMessage("No more than {MaxLength} characters");
+                .MaximumLength(100).WithMessage("No more than {MaxLength} characters");
             RuleFor(p => p.Description).Length(0, 247).WithMessage("No more than 240 characters");
         }
     }
